@@ -1,0 +1,65 @@
+
+
+.container_design{
+
+    display: flex;
+    background: #5C677D;
+    justify-content: center;
+    
+
+}
+
+
+.Menu_Design{
+
+    display: flex;
+    align-items: center;
+    max-width: 1024px;
+    width: 1024px;
+    margin: 10px;
+    
+    
+
+}
+
+
+.Menu_Design .logo{
+
+    width: 70px;
+    height: 50px;
+
+
+}
+
+
+
+
+.dd-wrapper{
+
+    padding: 0 20px;
+    
+
+}
+
+
+
+
+
+
+.dd-header{
+
+    font-size: 20px;
+    background: red;
+
+}
+
+
+
+
+.dd-list li{
+
+    position: absolute ;
+    
+
+
+}

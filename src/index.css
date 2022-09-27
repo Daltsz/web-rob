@@ -11,16 +11,11 @@ body {
   background-color: #ddd;
 }
 
-
-
 #root{
-  
   max-width: 100%;
   margin: 0 auto;
   padding: 0 20 20;
-
 }
-
 
 button{
   cursor: pointer;

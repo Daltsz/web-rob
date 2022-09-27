@@ -8,20 +8,13 @@ function Dropdown({title, items = []}){
     const [open, setOpen] = useState(false);
     const toggle = () => setOpen(!open); 
 
-
-
-
     // Nesta função ficarao o tratamento e funcionalidade de todos os botoões
     function handleOnClick(item){}
     
-    
-
     Dropdown.handleClickOutside = () => setOpen(false);
 
     return(
-
         <div className='dd-wrapper'>
-
             <div
                 tabIndex={0} 
                 className='dd-header' 
@@ -31,10 +24,7 @@ function Dropdown({title, items = []}){
             >
                 <div className='dd-header-title'>
                     <strong className='dd-header-strong'>{title}</strong>
-                </div>
-
-
-                
+                </div> 
             </div>
             
             {open &&(
@@ -48,19 +38,14 @@ function Dropdown({title, items = []}){
                     ))}
                 </ul>
             )}
-
         </div>
     );
 
 }
 
-
 const clickOutsideConfig = {
     handleClickOutside: () => Dropdown.handleClickOutside,
-
-
 };
-
 
 export default onClickOutside(Dropdown, clickOutsideConfig);
 

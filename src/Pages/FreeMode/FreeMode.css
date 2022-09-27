@@ -4,3 +4,38 @@
 .BlockCompnent {
     margin-top: 50px;
 }
+
+.buttonsWorkSpace{
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 32px;
+    margin: 4px 2px;
+    
+    
+}
+
+.Btns{
+    background-color: #5c677d;
+    font-size: 30px;
+    text-decoration: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    text-align: center;
+    padding: 10px;
+}
+
+.Btns:hover{
+
+    background-color: #323742;
+}
+
+
+.buttonsWorkSpace > .Btns:not(:last-child) {
+    margin-right: 30%;
+    
+}
+
+

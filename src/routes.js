@@ -5,9 +5,7 @@ import Home from './Pages/Home';
 import Campaing from './Pages/Campaing';
 
 export default function Routes(){
-
     return(
-
         <BrowserRouter>      
             <Switch>
                 <Route exact path='/' component={Home} ></Route>
@@ -15,9 +13,5 @@ export default function Routes(){
                 <Route path ='/Campaing' component={Campaing}></Route>
             </Switch>
         </BrowserRouter>    
-
-
-
-
     );
 }

@@ -1,17 +1,17 @@
 import React from 'react'; 
-import {Route, Switch, BrowserRouter} from 'react-router-dom';
+import {Route, Routes, BrowserRouter} from 'react-router-dom';
 import FreeMode from './Pages/FreeMode';
 import Home from './Pages/Home';
 import Campaing from './Pages/Campaing';
 
-export default function Routes(){
+export default function Directions(){
     return(
-        <BrowserRouter>      
-            <Switch>
-                <Route exact path='/' component={Home} ></Route>
-                <Route path='/FreeMode' component={FreeMode} ></Route>
-                <Route path ='/Campaing' component={Campaing}></Route>
-            </Switch>
-        </BrowserRouter>    
+        <BrowserRouter>
+            <Routes>
+                <Route exact path='/' element={<Home></Home>}></Route>
+                <Route path='/FreeMode' element={<FreeMode></FreeMode>} ></Route>
+                <Route path ='/Campaing' element={<Campaing></Campaing>}></Route>
+            </Routes>
+        </BrowserRouter>
     );
 }

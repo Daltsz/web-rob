@@ -1,10 +1,10 @@
 import React from "react";
-import Routes from './routes';
+import Directions from './routes';
 
 
 function App(){
   return(
-      <Routes></Routes>
+      <Directions></Directions>
   );
 }
 

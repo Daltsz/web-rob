@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import logo from '../../assets/logo.svg.svg';
+import logo from '../../Assets/logo.svg.svg';
 import './style.css'
 
 export default function Header() {
@@ -24,4 +24,3 @@ export default function Header() {
     </header>
  );
 }
-

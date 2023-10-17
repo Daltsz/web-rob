@@ -1,9 +1,6 @@
-
-
-
-.BlockCompnent {
-    margin-top: 50px;
-}
+.fill-height {
+    height: calc(80vh - 114px);
+  }
 
 .buttonsWorkSpace{
 
@@ -37,5 +34,3 @@
     margin-right: 30%;
     
 }
-
-

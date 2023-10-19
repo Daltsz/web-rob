@@ -1,5 +1,5 @@
-import "./freeMode.css";
-import "../../Components/Blocks/customBlocks";
+import "./FreeMode.css";
+import "../../Components/Blocks/customblocks";
 import { getDefaultToolBox } from "../../Components/Blockly/getDefaultToolBox";
 import { DEFAULT_OPTIONS } from "../../Components/Blockly/workspaceConfigs";
 import React, { useRef, useState } from "react";

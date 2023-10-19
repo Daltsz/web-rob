@@ -1,26 +1,28 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
-import logo from '../../Assets/logo.svg.svg';
+import { useNavigate } from "react-router-dom";
+import logo from '../../assets/Logo.svg';
 import './style.css'
 
 export default function Header() {
- return (  
-    <header className="container" >    
+    const navigate = useNavigate()
+    return (
+        <header className="container" >
             <div className='menu'>
-                <Link to='/'>
-                    <img className="logo" src={logo} alt='logo'></img>
-                </Link>
-                <Link  to='/FreeMode'>
-                    <div>
-                        <strong>Free Mode</strong>
-                    </div>
-                </Link>
-                <Link  to= '/Campaing'>
-                    <div>
-                        <strong>Campaing</strong>
-                    </div>
-                </Link>
+
+                <button id='logo' onClick={() => { navigate('/') }}  >
+                    <img className="logo" src={logo} alt='Logo'></img>
+                </button>
+
+                <div className='btns'>
+                    <button id='FreeMode' onClick={() => { navigate('/FreeMode') }}  >
+                        Free Mode
+                    </button>
+
+                    <button id='Campaing' onClick={() => { navigate('/Campaing') }}  >
+                        Campaing
+                    </button>
+                </div>
             </div>
-    </header>
- );
+        </header>
+    );
 }

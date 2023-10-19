@@ -61,7 +61,7 @@ export const getDefaultToolBox = () => {
                 {
                     kind: "block",
                     type: "Direita",
-                }
+                },
                 ],
             }
         ]

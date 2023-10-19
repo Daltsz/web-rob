@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+
 body {
   padding: 0;
   outline: 0;
@@ -10,6 +13,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: #ddd;
 }
+
 
 #root{
   max-width: 100%;

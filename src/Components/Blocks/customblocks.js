@@ -82,31 +82,31 @@ import {javascriptGenerator} from 'blockly/javascript';
   };
 
 
-  Blockly.Blocks['Concatenar_Strings'] = {
-    init: function() {
-      this.appendDummyInput()
-          .appendField("Concatenar Strings");
-      this.setOutput(true, "Array");
-      this.setColour(70);
-      this.setTooltip("");
-      this.setHelpUrl("");
-    }
-  };
+  // Blockly.Blocks['Concatenar_Strings'] = {
+  //   init: function() {
+  //     this.appendDummyInput()
+  //         .appendField("Concatenar Strings");
+  //     this.setOutput(true, "Array");
+  //     this.setColour(70);
+  //     this.setTooltip("");
+  //     this.setHelpUrl("");
+  //   }
+  // };
   
-  Blockly.JavaScript['Concatenar_Strings'] = function(block) {
-    // Crie um array para armazenar as strings
-    var lista = [];
+  // Blockly.JavaScript['Concatenar_Strings'] = function(block) {
+  //   // Crie um array para armazenar as strings
+  //   var lista = [];
     
-    // Coletar as saídas dos blocos de string e adicioná-las ao array
-    for (var i = 0; i < block.inputList.length; i++) {
-      var input = block.inputList[i];
-      if (input.connection && input.connection.targetBlock()) {
-        var stringValue = Blockly.JavaScript.valueToCode(block, 'STRING' + i, Blockly.JavaScript.ORDER_NONE);
-        lista.push(stringValue);
-      }
-    }
+  //   // Coletar as saídas dos blocos de string e adicioná-las ao array
+  //   for (var i = 0; i < block.inputList.length; i++) {
+  //     var input = block.inputList[i];
+  //     if (input.connection && input.connection.targetBlock()) {
+  //       var stringValue = Blockly.JavaScript.valueToCode(block, 'STRING' + i, Blockly.JavaScript.ORDER_NONE);
+  //       lista.push(stringValue);
+  //     }
+  //   }
     
-    // Retorne o array como um array Blockly
-    return [JSON.stringify(lista)];
-  };
+  //   // Retorne o array como um array Blockly
+  //   return [JSON.stringify(lista)];
+  // };
   

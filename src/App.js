@@ -1,5 +1,5 @@
 import React from "react";
-import Directions from './routes';
+import Directions from './AppRoutes';
 
 
 function App(){

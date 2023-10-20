@@ -1,13 +1,13 @@
 import React from 'react';
-// import HeaderDesign from '../../Components/Header_Design';
+import Header from '../../Components/Header';
 
 
 export default function Campaing(){
     return(
         <div>
-            {/* <header>
-                <HeaderDesign></HeaderDesign>
-            </header> */}
+            <header>
+                <Header/>
+            </header>
             <h1>CAMPANHA</h1>        
         </div>
     );

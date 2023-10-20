@@ -1,4 +1,5 @@
-import DarkTheme from '@blockly/theme-dark';
+// import DarkTheme from '@blockly/theme-dark';
+// import Theme from '@blockly/theme-modern';
 
 export const DEFAULT_OPTIONS = {
   collapse: true,
@@ -31,5 +32,5 @@ export const DEFAULT_OPTIONS = {
   maxInstances: {
     alert_context: 1
   },
-  theme: DarkTheme,
+  // theme: Theme,
 };

@@ -49,8 +49,8 @@ export default function App() {
   }
 
 
-
   return (
+
     <div>
       <header>
         <Header></Header>
@@ -59,10 +59,15 @@ export default function App() {
         <BlocklyWorkspace/>
       </div>
       <div className="buttonsWorkSpace">
-        <button className="Btns" onClick={handleCompileClick}>Compilar</button>
-        <button  className="Btns" onClick={handleClick}>Rodar</button>
+        <div className="code">{workspaceCode}</div>
+
+        <div className="divBtns">
+          <button className="Btns" onClick={handleCompileClick}>Compilar</button>
+          <button  className="Btns" onClick={handleClick}>Controlar</button>
+        </div>
+        
       </div>
-      <pre>{workspaceCode}</pre>
+      
   </div>
   );
 }

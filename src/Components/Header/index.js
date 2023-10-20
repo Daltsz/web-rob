@@ -15,11 +15,11 @@ export default function Header() {
 
                 <div className='btns'>
                     <button id='FreeMode' onClick={() => { navigate('/FreeMode') }}  >
-                        Free Mode
+                        Modo Livre
                     </button>
 
                     <button id='Campaing' onClick={() => { navigate('/Campaing') }}  >
-                        Campaing
+                        Campanha
                     </button>
                 </div>
             </div>

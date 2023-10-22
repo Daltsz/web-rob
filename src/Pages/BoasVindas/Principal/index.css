@@ -1,0 +1,73 @@
+.fundo {
+    width: auto;
+    height: auto;
+    align-items: center;
+    background-color: #F3F8FF;
+}
+
+.principal {
+    display: flex;
+    justify-content: space-between;
+}
+
+.h1Programacao {
+    font-family: 'Poppins';
+    font-weight: 700;
+    font-size: 50px;
+    color: #292E37;
+    margin-left: 60px;
+    margin-top: 170px;
+}
+
+.h2Texto {
+    font-family: 'Poppins';
+    font-weight: 700;
+    font-size: 14px;
+    font-weight: 400;
+    color: #292E37;
+    width: 436px;
+    margin-left: 60px;
+}
+
+.mockup {
+    margin-top: 87px;
+}
+
+.buttons{
+    display: flex;
+    margin-left: 60px;
+    margin-top: 18px;
+}
+
+#btnVamosLa {
+    width: 190px;
+    height: 62px;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #45BFFF 27.8%, #00A7FF 98.65%);
+    box-shadow: 0px 24px 30px -16px rgba(45, 183, 255, 0.25);
+    border: none;
+    font-family: 'Poppins';
+    font-size: 16px;
+    font-weight: 600;
+    color: #FFF;
+    cursor: pointer;
+}
+
+.btnTutorial {
+    display: flex;
+}
+
+.h1Tutorial {
+    font-family: 'Poppins';
+    color: #19B0FF;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+}
+
+#play {
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+}

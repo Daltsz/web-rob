@@ -1,0 +1,68 @@
+.h1Title {
+    font-family: 'Poppins';
+    font-weight: 600;
+    font-size: 20px;
+    color: #10ADFF;
+    font-size: 20px;
+    letter-spacing: 2.5px;
+}
+
+#section-sobre{
+    margin-top: 90px;
+    margin-left: 60px;
+    margin-bottom: 128px;
+}
+
+.h2Texto-Sobre{
+    font-family: 'Poppins';
+    font-size: 40px;
+    font-weight: 700;
+    color: #292E37;
+    width: 1103px;
+}
+
+.palavra-destacada {
+    color: #00D9FF;
+}
+
+.btnsDiferenciais {
+    width: 1154px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 120px;
+}
+
+.btnsDiferenciais  h1 {
+    font-family: 'Poppins';
+    font-size: 20px;
+    font-weight: 600;
+    color: #292E37;
+    margin-left: 30px;
+}
+
+#Programacao, #Aprendizado, #Educacional {
+    width: 100px;
+    height: 100px;
+    border: none;
+    border-radius: 50%;
+}
+
+#Programacao {
+    background-color: #3498db;
+    filter: drop-shadow(0px 20px 35px rgba(0, 192, 225, 0.40));
+}
+
+#Aprendizado {
+    background-color: #FF5600;
+    filter: drop-shadow(0px 30px 35px rgba(250, 84, 0, 0.30));
+}
+
+#Educacional {
+    background-color: #FFC700;
+    filter: drop-shadow(0px 20px 35px rgba(250, 195, 0, 0.40));
+}
+
+.ProgAcessivel, .AprendInterativo, .Educa {
+    display: flex;
+    align-items: center;
+}

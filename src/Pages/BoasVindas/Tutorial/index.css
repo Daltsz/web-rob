@@ -1,0 +1,29 @@
+.fundo-tutorial {
+    width: auto;
+    height: auto;
+    align-items: center;
+    background-color: #F3F8FF;
+}
+
+.h1Tutorial-tutorial {
+    color: #2A2E36;
+    text-align: center;
+    font-family: 'Poppins';
+    font-size: 75px;
+    font-weight: 600;
+    padding-top: 90px;
+    display: flex;
+    justify-content: center;
+}
+
+.video {
+    width: 1000px;
+    height: 574px;
+    border: 5px solid #00ACFF;
+    margin: auto;
+    
+}
+
+.video-youtube {
+    border: none;
+}

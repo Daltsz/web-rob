@@ -1,0 +1,63 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    font-family: 'Poppins';
+    font-size: 14px;
+    color: #424D65;
+    width: 100%;
+}
+
+.logo {
+    margin-left: 35px;
+}
+
+.menu ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+.menu li {
+    margin: 0 20px;
+    cursor: pointer;
+}
+
+.btnLogin {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-right: 35px;
+}
+
+.btnLogin button {
+    margin-left: 10px;
+}
+
+#btnEntrar {
+    width: 42px;
+    height: 23px;
+    border: none;
+    font-family: 'Poppins';
+    color: #424D65;
+    background-color: transparent;
+    border-bottom: 2px solid #04A8FF; 
+    padding: 2px 2px; 
+    cursor: pointer; 
+}
+
+#btnCriarConta {
+    width: 120px;
+    height: 40px;
+    cursor: pointer; 
+    border-radius: 8px;
+    background: #DEF4FE;
+    border: none;
+    font-family: 'Poppins';
+    font-size: 13px;
+    color: #04A8FF;
+}

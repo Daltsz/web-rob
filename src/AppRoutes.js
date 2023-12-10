@@ -4,6 +4,7 @@ import FreeMode from './Pages/FreeMode';
 import Home from './Pages/Home';
 import Campaing from './Pages/Campaing';
 import BoasVindas from './Pages/BoasVindas';
+import Calculator from './Pages/Calculator/calculador.js';
 
 export default function Directions(){
     return(
@@ -13,6 +14,7 @@ export default function Directions(){
                 <Route exact path='/inicio' element={<Home></Home>}></Route>
                 <Route path='/FreeMode' element={<FreeMode></FreeMode>} ></Route>
                 <Route path ='/Campaing' element={<Campaing></Campaing>}></Route>
+                <Route path ='/puzzle' element={<Calculator></Calculator>}></Route>
             </Routes>
         </BrowserRouter>
     );

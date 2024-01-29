@@ -10,7 +10,7 @@ function Tutorial() {
                 <h1 className="h1Tutorial-tutorial">Tutorial</h1>
 
                 <div className="video">
-                    <iframe width="1000" height="574" src="https://www.youtube.com/embed/LK7M2ftEfrg?si=bmnvbHxNybrxEqss" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    {/* <iframe width="1000" height="574" src="https://www.youtube.com/embed/LK7M2ftEfrg?si=bmnvbHxNybrxEqss" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe> */}
                 </div>
             </div>
 

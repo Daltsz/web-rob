@@ -15,7 +15,7 @@ export default function Directions(){
                 <Route exact path='/inicio' element={<Home></Home>}></Route>
                 <Route path='/FreeMode' element={<FreeMode></FreeMode>} ></Route>
                 <Route path ='/Campaing' element={<Campaing></Campaing>}></Route>
-                <Route path ='/puzzle' element={<PuzzleComponent></PuzzleComponent>}></Route>
+                <Route path ='/calculator' element={<Calculator></Calculator>}></Route>
             </Routes>
         </BrowserRouter>
     );

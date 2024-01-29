@@ -12,7 +12,7 @@ export default function Campaing(){
                 <Header/>
             </header>
             <div className='btnsCampanha'>
-                <button className='btnCalculator' onClick={() => { navigate('/puzzle') }}>Calculadora</button>
+                <button className='btnCalculator' onClick={() => { navigate('/calculator') }}>Calculadora</button>
             </div>
                     
         </div>

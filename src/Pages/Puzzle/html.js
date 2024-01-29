@@ -3,9 +3,9 @@ import messages from './message.json'
 import BlocklyGamesHtml from "./libs/lib-games-htmls";
 
 const start = (ij) => {
-    return `
+  return `
 ${BlocklyGamesHtml.headerBar(ij, BlocklyGames.getMsg(messages['Games.puzzle'], true), '', false, true,
-        `<button id="checkButton" class="primary">${BlocklyGames.getMsg(messages['Puzzle.checkAnswers'], true)}</button>`)}
+    `<button id="checkButton" class="primary">${BlocklyGames.getMsg(messages['Puzzle.checkAnswers'], true)}</button>`)}
 
 <div id="blockly"></div>
 

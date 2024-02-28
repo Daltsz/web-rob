@@ -80,6 +80,10 @@ const Calculator = () => {
                 <div className='btnCalcular'>
                     <button onClick={runCode} className='Calcular'>Calcular</button>
                 </div>
+
+
+
+                
             </div>
 
 
@@ -99,7 +103,6 @@ const Calculator = () => {
                     <block type="logic_operation"></block>
                     <block type="logic_negate"></block>
                 </category>
-                {/* <category name="Variáveis" colour="330" custom="VARIABLE"></category> */}
             </xml>
         </div>
     );

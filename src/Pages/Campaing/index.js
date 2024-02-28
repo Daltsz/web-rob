@@ -3,18 +3,19 @@ import Header from '../../Components/Header';
 import { useNavigate } from "react-router-dom";
 import "./index.css"
 
-export default function Campaing(){
+export default function Campaing() {
     const navigate = useNavigate()
 
-    return(
-        <div>
-            <header>
-                <Header/>
-            </header>
+    return (
+        <>
+            <Header />
             <div className='btnsCampanha'>
                 <button className='btnCalculator' onClick={() => { navigate('/calculator') }}>Calculadora</button>
             </div>
-                    
-        </div>
+            <div className='btnsCampanha'>
+                <button className='btnCalculator' onClick={() => { navigate('/Moviment') }}>Movimentos</button>
+            </div>
+
+        </>
     );
 }

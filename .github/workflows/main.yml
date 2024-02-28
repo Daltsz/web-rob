@@ -7,6 +7,9 @@ on:
 jobs:
   integration:
     runs-on: ubuntu-latest
+    env:
+        CI: false
+
     steps:
       - uses: actions/checkout@v1
 
@@ -17,8 +20,6 @@ jobs:
 
       - name: 'Install dependencies'
         run: npm install
-        env:
-          CI: false
 
       - name: 'Build'
         run: npm run build

@@ -10,6 +10,7 @@
     "ajv": "^8.0.0",
     "axios": "^1.5.1",
     "blockly": "^10.2.2",
+    "prettier": "^3.2.5",
     "react": "^18.2.0",
     "react-blockly": "^8.0.0",
     "react-dom": "^18.2.0",

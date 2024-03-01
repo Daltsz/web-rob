@@ -10,6 +10,7 @@
     "ajv": "^8.0.0",
     "axios": "^1.5.1",
     "blockly": "^10.2.2",
+    "jest": "^27.5.1",
     "prettier": "^3.2.5",
     "react": "^18.2.0",
     "react-blockly": "^8.0.0",
@@ -22,7 +23,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "test:ci": "react-scripts test --ci"
   },
   "eslintConfig": {
     "extends": [

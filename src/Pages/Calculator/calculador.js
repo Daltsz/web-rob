@@ -1,26 +1,28 @@
 // Calculator.js
-import React, { useState, useEffect } from 'react';
-import Header from '../../Components/Header';
-import { javascriptGenerator } from 'blockly/javascript';
-import "./index.css"
 import Blockly from 'blockly';
+import { javascriptGenerator } from 'blockly/javascript';
+import React, { useEffect, useState } from 'react';
+import Header from '../../Components/Header';
+import "./index.css";
 
 const Calculator = () => {
-    const [workspace, setWorkspace] = useState(null);
     const [generatedCode, setGeneratedCode] = useState('');
     const [results, setResults] = useState([]);
     const [expressao, setExpressao] = useState([]);
 
 
+    const evaluateFn = () => {
+        return generatedCode;
+    }
+
     const handleRunCode = () => {
         try {
-            const evaluateFn = new Function('return ' + generatedCode);
             const result = evaluateFn();
 
             if (Number.isNaN(result)) {
                 alert('A expressão é inválida.');
             } else {
-                setResults((prevResults) => [...prevResults, {expression: expressao, result}]);
+                setResults((prevResults) => [...prevResults, { expression: expressao, result }]);
             }
         } catch (error) {
             alert('Erro ao avaliar a expressão.');
@@ -36,8 +38,6 @@ const Calculator = () => {
         const workspace = Blockly.inject('blocklyDiv', {
             toolbox: document.getElementById('toolbox'),
         });
-
-        setWorkspace(workspace);
 
         const handleChange = () => {
             const code = javascriptGenerator.workspaceToCode(workspace);
@@ -60,8 +60,8 @@ const Calculator = () => {
 
     return (
         <div>
-            <Header></Header>
-            <div id="blocklyDiv" style={{ height: '400px', width: '100%' }}></div>
+            <Header />
+            <div id="blocklyDiv" style={{ height: '400px', width: '100%', position: "relative" }}></div>
             <div className='conteudo'>
                 <div className='codigo'>
                     <h4>Código Gerado:</h4>
@@ -80,12 +80,7 @@ const Calculator = () => {
                 <div className='btnCalcular'>
                     <button onClick={runCode} className='Calcular'>Calcular</button>
                 </div>
-
-
-
-                
             </div>
-
 
             <xml
                 xmlns="https://developers.google.com/blockly/xml"

@@ -1,7 +1,7 @@
 import React from 'react';
-import Header from '../../Components/Header';
 import { useNavigate } from "react-router-dom";
-import "./index.css"
+import Header from '../../Components/Header';
+import "./index.css";
 
 export default function Campaing() {
     const navigate = useNavigate()
@@ -13,7 +13,7 @@ export default function Campaing() {
                 <button className='btnCalculator' onClick={() => { navigate('/calculator') }}>Calculadora</button>
             </div>
             <div className='btnsCampanha'>
-                <button className='btnCalculator' onClick={() => { navigate('/Moviment') }}>Movimentos</button>
+                <button className='btnCalculator' onClick={() => { navigate('/moviment') }}>Movimentos</button>
             </div>
 
         </>

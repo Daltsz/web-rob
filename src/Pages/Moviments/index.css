@@ -1,15 +1,15 @@
 .fill-height {
     height: calc(80vh - 114px);
-  }
+}
 
-.buttonsWorkSpace{
+.buttonsWorkSpace {
     display: flex;
     align-items: center;
     padding: 40px 32px;
     justify-content: flex-end
 }
 
-.Btns{
+.Btns {
     background-color: #5c677d;
     font-family: 'Poppins';
     font-size: 20px;
@@ -21,6 +21,7 @@
     padding: 10px;
     width: 150px;
     margin-right: 19px;
+    margin-top: 20px;
 
     border-radius: 8px;
     background: linear-gradient(90deg, #45BFFF 27.8%, #00A7FF 98.65%);
@@ -28,17 +29,17 @@
 
 }
 
-.Btns:hover{
+.Btns:hover {
     background-color: #323742;
 }
 
 
-.buttonsWorkSpace > .Btns:not(:last-child) {
+.buttonsWorkSpace>.Btns:not(:last-child) {
     margin-right: 30%;
-    
+
 }
 
-.code{
+.code {
     background-color: #10d5f8c7;
     width: 400px;
     max-height: 50px;

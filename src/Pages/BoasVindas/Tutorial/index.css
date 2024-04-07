@@ -3,6 +3,8 @@
     height: auto;
     align-items: center;
     background-color: #F3F8FF;
+    display: flex;
+    justify-content: center;
 }
 
 .h1Tutorial-tutorial {
@@ -20,8 +22,8 @@
     width: 1000px;
     height: 574px;
     border: 5px solid #00ACFF;
-    margin: auto;
-    
+    margin-bottom: 25px;
+
 }
 
 .video-youtube {

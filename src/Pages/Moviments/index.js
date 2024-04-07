@@ -1,13 +1,12 @@
-import "./index.css";
+import { javascriptGenerator } from 'blockly/javascript';
+import React, { useRef, useState } from "react";
+import { BlocklyWorkspace, useBlocklyWorkspace } from "react-blockly";
 import "../Moviments/Blocks/Blocks.js";
 import { getDefaultToolBoxMoviment } from "../Moviments/Blocks/workspaceBlock/toolboxBlock.js";
 import { DEFAULT_OPTIONS_MOVIMENT } from "../Moviments/Blocks/workspaceBlock/workspace.js";
-import React, { useRef, useState } from "react";
-import { BlocklyWorkspace, useBlocklyWorkspace } from "react-blockly";
-import { javascriptGenerator } from 'blockly/javascript';
+import "./index.css";
 // import api from '../../Services/api';
 import Header from '../../Components/Header';
-
 
 
 export default function Moviments() {
@@ -52,7 +51,7 @@ export default function Moviments() {
 
     return (
         <>
-            <Header></Header>
+            <Header />
             <div className="fill-height" ref={blocklyRef}>
                 <BlocklyWorkspace />
             </div>

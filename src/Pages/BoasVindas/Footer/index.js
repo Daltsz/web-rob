@@ -1,5 +1,5 @@
-import "../Footer/index.css"
-import Logo from "../../../assets/Logo.svg"
+import Logo from "../../../assets/Logo.svg";
+import "../Footer/index.css";
 
 function Footer() {
     return (
@@ -48,7 +48,7 @@ function Footer() {
 
             </div>
 
-            <p className="p-footer">© 2023 Feito por <a href="https://github.com/BeaComp" target="_blank">Beatriz Cristina de Faria</a></p>
+            <p className="p-footer">© 2023 Feito por <a href="https://github.com/BeaComp" target="_blank" rel="noreferrer">Beatriz Cristina de Faria</a></p>
         </div>
     )
 }

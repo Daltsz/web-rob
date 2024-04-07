@@ -1,12 +1,12 @@
-import "./FreeMode.css";
-import "../../Components/Blocks/customblocks";
-import { getDefaultToolBox } from "../../Components/Blockly/getDefaultToolBox";
-import { DEFAULT_OPTIONS } from "../../Components/Blockly/workspaceConfigs";
+import { javascriptGenerator } from 'blockly/javascript';
 import React, { useRef, useState } from "react";
-import { BlocklyWorkspace, useBlocklyWorkspace} from "react-blockly";
-import {javascriptGenerator} from 'blockly/javascript';
-import api from '../../Services/api';
+import { BlocklyWorkspace, useBlocklyWorkspace } from "react-blockly";
 import Header from '../../Components/Header';
+import api from '../../Services/api';
+import "./FreeMode.css";
+import { getDefaultToolBox } from "./LogicBlocks/Blockly/getDefaultToolBox";
+import { DEFAULT_OPTIONS } from "./LogicBlocks/Blockly/workspaceConfigs";
+import "./LogicBlocks/Blocks/customblocks";
 
 
 export default function App() {
@@ -21,14 +21,14 @@ export default function App() {
 
   const handleCompileClick = () => {
     if (workspace) {
-      try{
-      // javascriptGenerator.addReservedWords('code');
-      let code = javascriptGenerator.workspaceToCode(workspace);
-      code = code.split(' ')
-      console.log(code)
-      setWorkspaceCode(code);
-      alert('Compilado Com Sucesso')
-      }catch(err){
+      try {
+        // javascriptGenerator.addReservedWords('code');
+        let code = javascriptGenerator.workspaceToCode(workspace);
+        code = code.split(' ')
+        console.log(code)
+        setWorkspaceCode(code);
+        alert('Compilado Com Sucesso')
+      } catch (err) {
         alert('Não Compilado')
         console.log('message error', err);
       }
@@ -36,13 +36,13 @@ export default function App() {
   }
 
 
-  const handleClick = async (e) =>{
+  const handleClick = async (e) => {
     e.preventDefault();
-    try{
+    try {
       let resp = await api.post('/led-blink', workspaceCode);
       console.log(resp);
       alert('Rodou Corretamente')
-    }catch(err){
+    } catch (err) {
       alert('Infelizmente não Rodou')
       console.log('Mensagem Não Enviada', err);
     }
@@ -52,22 +52,20 @@ export default function App() {
   return (
 
     <div>
-      <header>
-        <Header></Header>
-      </header>
-      <div  className="fill-height" ref={blocklyRef}>
-        <BlocklyWorkspace/>
+      <Header />
+      <div className="fill-height" ref={blocklyRef}>
+        <BlocklyWorkspace />
       </div>
       <div className="buttonsWorkSpace">
         <div className="code">{workspaceCode}</div>
 
         <div className="divBtns">
           <button className="Btns" onClick={handleCompileClick}>Compilar</button>
-          <button  className="Btns" onClick={handleClick}>Controlar</button>
+          <button className="Btns" onClick={handleClick}>Controlar</button>
         </div>
-        
+
       </div>
-      
-  </div>
+
+    </div>
   );
 }

@@ -1,12 +1,12 @@
 import React from 'react';
 import { useNavigate } from "react-router-dom";
 import logo from '../../assets/Logo.svg';
-import './style.css'
+import './style.css';
 
 export default function Header() {
     const navigate = useNavigate()
     return (
-        <header className="container" >
+        <div className="container" >
             <div className='menu'>
 
                 <button id='logo' onClick={() => { navigate('/inicio') }}  >
@@ -23,6 +23,6 @@ export default function Header() {
                     </button>
                 </div>
             </div>
-        </header>
+        </div>
     );
 }

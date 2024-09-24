@@ -6,6 +6,7 @@ import Campaing from './Pages/Campaing';
 import BoasVindas from './Pages/BoasVindas';
 import Calculator from './Pages/Calculator/calculador.js';
 import PuzzleComponent from './Pages/Puzzle/PuzzleGame.js';
+import BlocklyGamesComponent from './Pages/blocklyGames/blocklygames.js';
 import Moviments from './Pages/Moviments/index.js';
 
 export default function Directions(){
@@ -18,6 +19,7 @@ export default function Directions(){
                 <Route path ='/Campaing' element={<Campaing></Campaing>}></Route>
                 <Route path ='/calculator' element={<Calculator></Calculator>}></Route>
                 <Route path ='/Moviment' element={<Moviments></Moviments>}></Route>
+                <Route path='/blocklyGames' element={<BlocklyGamesComponent></BlocklyGamesComponent>}></Route>
             </Routes>
         </BrowserRouter>
     );

@@ -9,21 +9,28 @@ export const getDefaultToolBox = () => {
                 name: "Logic",
                 colour: "#5C81A6",
                 contents: [
-                {
-                    kind: "block",
-                    type: "controls_if",
-                },
-                {
-                    kind: "block",
-                    type: "logic_compare",
-                },
-                {
-                    kind: "block",
-                    type: "lists_create_with",
-                    "extraState": {
-                      "itemCount": 2
+                    {
+                        kind: "block",
+                        type: "controls_if",
+                    },
+                    {
+                        kind: "block",
+                        type: "logic_compare",
+                    },
+                    {
+                        kind: "block",
+                        type: "lists_create_with",
+                        "extraState": {
+                        "itemCount": 2
+                        }
+                    },
+                    {
+                        kind: "block",
+                        type: "repeticao",
+                        fields: {
+                            "repetir": "1",
+                        },
                     }
-                  }
                 ],
             },
             {
@@ -62,6 +69,22 @@ export const getDefaultToolBox = () => {
                     kind: "block",
                     type: "Direita",
                 },
+                {
+                    kind: "block",
+                    type: "piscarLed",
+                },
+                {
+                    kind: "block",
+                    type: "mexerMotor",
+                },
+                {
+                    kind: "block",
+                    type: "piscarLedNew",
+                },
+                {
+                    kind: "block",
+                    type: "INICIO",
+                }
                 ],
             }
         ]

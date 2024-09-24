@@ -15,7 +15,12 @@ export default function Campaing() {
             <div className='btnsCampanha'>
                 <button className='btnCalculator' onClick={() => { navigate('/Moviment') }}>Movimentos</button>
             </div>
-
+            <div className='btnsCamapnha'>
+                <button className='btnCalculator' onClick={() => { navigate('/Puzzle')}}>Puzzles</button>
+            </div>
+            <div className='btnsCamapnha'>
+                <button className='btnCalculator' onClick={() => { navigate('/blocklyGames')}}>BlocklyGames</button>
+            </div>
         </>
     );
 }

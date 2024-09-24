@@ -1,7 +1,8 @@
 import "../Colaboradores/index.css"
 import Antonio  from   '../../../assets/Antonio.svg';
 import Dadalto from '../../../assets/Dadalto.svg';
-import Pozza from '../../../assets/Pozza.svg';
+import Beatriz from '../../../assets/Beatriz.svg';
+import Higor from '../../../assets/Higor.svg';
 
 function Colaboradores(){
     return (
@@ -18,29 +19,40 @@ function Colaboradores(){
                     </p>
 
                     <p className="descricao-colab">
-                    Graphic design is a craft where professionals create visual content to communicate and the messages. By applying visual hierarchy and page layout techniques
+                        Graphic design is a craft where professionals create visual content to communicate and the messages. By applying visual hierarchy and page layout techniques
                     </p>
                 </div>
 
                 <div>
                     <img src={Dadalto} alt="Gabriel Dadalto" />
                     <p className="nome-colab">
-                        Gabriel Dias Dadalto
+                        Gabriel Dadalto
                     </p>
 
                     <p className="descricao-colab">
-                    Front-end web development is the practice of converting data to a graphical interface, through the use of HTML, CSS, and JavaScript.
+                        Front-end web development is the practice of converting data to a graphical interface, through the use of HTML, CSS, and JavaScript.
                     </p>
                 </div>
 
                 <div>
-                    <img src={Pozza} alt="Rogerio Pozza" />
+                    <img src={Beatriz} alt="Beatriz Cristina" />
                     <p className="nome-colab">
-                        Rogério Pozza
+                        Beatriz Cristina
                     </p>
 
                     <p className="descricao-colab">
-                    Front-end web development is the practice of converting data to a graphical interface, through the use of HTML, CSS, and JavaScript.
+                        Front-end web development is the practice of converting data to a graphical interface, through the use of HTML, CSS, and JavaScript.
+                    </p>
+                </div>
+
+                <div>
+                    <img src={Higor} alt="Higor Rozzan" />
+                    <p className="nome-colab">
+                        Higor Rozzan
+                    </p>
+
+                    <p className="descricao-colab">
+                        Front-end web development is the practice of converting data to a graphical interface, through the use of HTML, CSS, and JavaScript.
                     </p>
                 </div>
             </div>

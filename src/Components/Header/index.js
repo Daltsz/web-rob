@@ -9,7 +9,7 @@ export default function Header() {
         <header className="container" >
             <div className='menu'>
 
-                <button id='logo' onClick={() => { navigate('/inicio') }}  >
+                <button id='logo' onClick={() => { navigate('/') }}  >
                     <img className="logo" src={logo} alt='Logo'></img>
                 </button>
 

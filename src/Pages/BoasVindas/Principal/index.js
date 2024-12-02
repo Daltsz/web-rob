@@ -1,6 +1,6 @@
+import Mockup from '../../../assets/Mockup.svg'
 import Header from '../Header'
 import '../Principal/index.css'
-import Mockup from '../../../assets/Mockup.svg'
 
 function Principal() {
 
@@ -31,7 +31,6 @@ function Principal() {
               </div>
             </div>
           </div>
-
           <div className='mockup'>
             <img src={Mockup} alt="Mockup" />
           </div>

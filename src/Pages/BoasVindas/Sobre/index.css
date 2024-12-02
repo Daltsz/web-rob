@@ -7,18 +7,19 @@
     letter-spacing: 2.5px;
 }
 
-#section-sobre{
+#section-sobre {
     margin-top: 90px;
     margin-left: 60px;
     margin-bottom: 128px;
 }
 
-.h2Texto-Sobre{
+.h2Texto-Sobre {
     font-family: 'Poppins';
     font-size: 40px;
     font-weight: 700;
     color: #292E37;
     width: 1103px;
+    margin-bottom: 120px;
 }
 
 .palavra-destacada {
@@ -29,10 +30,10 @@
     width: 1154px;
     display: flex;
     justify-content: space-between;
-    margin-top: 120px;
+    margin: auto;
 }
 
-.btnsDiferenciais  h1 {
+.btnsDiferenciais h1 {
     font-family: 'Poppins';
     font-size: 20px;
     font-weight: 600;

@@ -11,6 +11,9 @@ import "./index.css";
 export default function SingUp() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [phone, setPhone] = useState('');
+    const [name, setName] = useState('');
+
     const navigate = useNavigate();
 
     const handleRoute = () => {
@@ -79,6 +82,14 @@ export default function SingUp() {
                     </p>
 
                     <Form onSubmit={singUp}>
+                        <Form.Group className="mb-4" controlId="formBasicName">
+                            <Form.Control
+                                className='form'
+                                type="name"
+                                placeholder="Nome"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)} />
+                        </Form.Group>
                         <Form.Group className="mb-4" controlId="formBasicEmail">
                             <Form.Control
                                 className='form'
@@ -94,6 +105,14 @@ export default function SingUp() {
                                 placeholder="Senha"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)} />
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="formBasicPhone">
+                            <Form.Control
+                                className='form'
+                                type="phone"
+                                placeholder="Telefone"
+                                value={phone}
+                                onChange={(e) => setPhone(e.target.value)} />
                         </Form.Group>
 
                         <Button className='mb-4 btnEntrar' variant="primary" type="submit">

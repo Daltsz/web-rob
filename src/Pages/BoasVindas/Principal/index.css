@@ -12,10 +12,10 @@
 
 .h1Programacao {
     font-family: 'Poppins';
-    font-weight: 700 !important;
+    font-weight: 700;
     font-size: 50px;
     color: #292E37;
-    margin-left: 194px;
+    margin-left: 60px;
     margin-top: 170px;
 }
 
@@ -24,11 +24,9 @@
     font-weight: 700;
     font-size: 14px;
     font-weight: 400;
-    line-height: 24px;
     color: #292E37;
     width: 436px;
-    margin-top: 36px;
-    margin-left: 194px;
+    margin-left: 60px;
 }
 
 .mockup {
@@ -37,7 +35,7 @@
 
 .buttons {
     display: flex;
-    margin-left: 194px;
+    margin-left: 60px;
     margin-top: 18px;
 }
 

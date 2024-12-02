@@ -27,7 +27,7 @@ function Colaboradores() {
                 <div>
                     <img src={Dadalto} alt="Gabriel Dadalto" />
                     <p className="nome-colab">
-                        Gabriel Dias Dadalto
+                        Gabriel Dadalto
                     </p>
 
                     <p className="descricao-colab">

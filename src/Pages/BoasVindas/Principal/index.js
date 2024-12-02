@@ -17,7 +17,7 @@ function Principal() {
             </h1>
 
             <h2 className='h2Texto'>
-              Desvende o mundo da programação de forma intuitiva e criativa com nossa plataforma de linguagem de blocos, onde cada bloco é uma peça que derá vida ao robô.
+              Desvende o mundo da programação de forma intuitiva e criativa com nossa plataforma de linguagem de blocos, onde cada bloco é uma peça que dará vida ao robô.
             </h2>
 
             <div className='buttons'>

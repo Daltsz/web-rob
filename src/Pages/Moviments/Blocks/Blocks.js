@@ -96,6 +96,9 @@ Blockly.Blocks['esperar'] = {
     var dropdown_1 = block.getFieldValue('repetir');
     var statements_faz = generator.statementToCode(block, 'faz');
     // TODO: Assemble javascript into code variable.
-    var code = `for(int i = 0, i < ${dropdown_1}, i++){${statements_faz}}`;
-    return code;
+    // var code = `for(var i=0; i<${dropdown_1};i++){${statements_faz}};`;
+    var code = `
+for i in range(${dropdown_1}):
+  ${statements_faz}`
+  return code;
   };

@@ -1,0 +1,54 @@
+body {
+    overflow: hidden;
+}
+
+#graph {
+    position: absolute;
+    bottom: 25px;
+    height: 15px;
+    width: 100px;
+    border: 1px solid #ddd;
+}
+
+#graphValue {
+    height: 15px;
+    width: 0;
+    background-color: #0d0;
+    transition-property: width;
+    transition-duration: 1s;
+}
+
+#blockly {
+    position: fixed;
+}
+
+#help {
+    overflow: hidden;
+}
+
+#sample {
+    height: 205px;
+    width: 300px;
+}
+.code{
+    background-color: #10d5f8c7;
+    width: 400px;
+    max-height: 50px;
+    overflow: auto;
+    display: flex;
+    margin-right: auto;
+    border-radius: 5px;
+    font-family: "Poppins";
+    font-size: 15px;
+    color: #FFFF;
+    display: flex;
+    padding: 15px;
+    margin-left: 93px;
+}
+
+#blocklyDiv {
+    height: 50%;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+}

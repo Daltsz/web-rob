@@ -8,7 +8,7 @@ import { getDefaultToolBox } from "./LogicBlocks/Blockly/getDefaultToolBox";
 import { DEFAULT_OPTIONS } from "./LogicBlocks/Blockly/workspaceConfigs";
 import "./LogicBlocks/Blocks/customblocks";
 
-const topico = "led_blink"
+const topico =  "charmander"
 
 export default function App() {
   const toolbox = getDefaultToolBox();

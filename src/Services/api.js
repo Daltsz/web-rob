@@ -6,8 +6,10 @@
 const Paho = require('paho-mqtt');
 
 // let brokerUrl = 'https://0.tcp.sa.ngrok.io:18196'
-// let brokerUrl = 'ws://159.223.188.213:8884/'
-let brokerUrl = 'ws://localhost:8884/'
+// Esse é o endereco relativo a digital ocean
+let brokerUrl = 'ws://159.223.188.213:8884/'
+// Esse aqui é para rodar localmente
+// let brokerUrl = 'ws://localhost:8884/'
 let clientId = '17243'
 
 console.log(brokerUrl)

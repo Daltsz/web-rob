@@ -27,13 +27,12 @@ motor1_pin1.value(1)
 motor1_pin2.value(0)
 motor2_pin1.value(1)
 motor2_pin2.value(0)
-time.sleep(5)
+time.sleep(2)
 motor1_pin1.value(0)
 motor1_pin2.value(0)
 motor2_pin1.value(0)
-motor2_pin2.value(0)
-`
-  return [code]
+motor2_pin2.value(0)`
+  return code
 };
 
   
@@ -61,12 +60,12 @@ motor1_pin1.value(0)
 motor1_pin2.value(1)
 motor2_pin1.value(0)
 motor2_pin2.value(1)
-time.sleep(5)
+time.sleep(2)
 motor1_pin1.value(0)
 motor1_pin2.value(0)
 motor2_pin1.value(0)
 motor2_pin2.value(0)`
-  return [code]
+  return code
 };
 
   
@@ -93,12 +92,11 @@ motor1_pin1.value(0)
 motor1_pin2.value(1) 
 motor2_pin1.value(1)
 motor2_pin2.value(0)
-time.sleep(5)
+time.sleep(2)
 motor1_pin1.value(0)
 motor1_pin2.value(0)
 motor2_pin1.value(0)
-motor2_pin2.value(0)
-`
+motor2_pin2.value(0)`
   return code
 };
   
@@ -127,12 +125,11 @@ motor1_pin1.value(1)
 motor1_pin2.value(0) 
 motor2_pin1.value(0)
 motor2_pin2.value(1)
-time.sleep(5)
+time.sleep(2)
 motor1_pin1.value(0)
 motor1_pin2.value(0)
 motor2_pin1.value(0)
-motor2_pin2.value(0)  
-`
+motor2_pin2.value(0)`
   return code
 };
 
@@ -198,10 +195,10 @@ motor_pin2.value(0)`
 
 
    
-Blockly.Blocks['piscarLedNew'] = {
+Blockly.Blocks['piscarLed2'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField("piscar Led New");
+        .appendField("piscar Led 2");
     this.setOutput(true, "String");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
@@ -214,7 +211,7 @@ Blockly.Blocks['piscarLedNew'] = {
 //   const code = "led.blink(1000);board.wait(10000,async()=>{led.off().stop();res.writeContinue();}); "
 //   return code
 // };
-javascriptGenerator.forBlock['piscarLedNew'] = function() {
+javascriptGenerator.forBlock['piscarLed2'] = function() {
   //const code = "var on=false;var pin=D2;var duration=5000;var interval=500;var intervalID=setInterval(function(){on=!on;digitalWrite(pin,on);},interval);setTimeout(function(){clearInterval(intervalID);digitalWrite(pin,true);},duration)"
   // const code ="var on=true;var pin3=0;var pin5=14;pinMode(pin5,'output');pinMode(pin3,'output');digitalWrite(pin5, on);digitalWrite(pin3,!on);setTimeout(function(){digitalWrite(pin5,!on);digitalWrite(pin3,!on);},5000)"
 const code = `
@@ -283,6 +280,40 @@ import time`
 return code;
 };
 
+
+
+
+//================   Codigo para proximas atualizações =============================
+
+
+
+// Blockly.Blocks['TOPICO'] = {
+//   init: function() {
+//     this.appendDummyInput()
+//         .appendField("TOPICO");
+//     this.setOutput(true, "String");
+//     this.setPreviousStatement(true, null);
+//     this.setColour(70);
+//     this.setTooltip("");
+//     this.setHelpUrl("");
+//   }
+// };
+
+
+
+// javascriptGenerator.forBlock['piscarLed'] = function() {
+//   const code = "led.blink(1000);board.wait(10000,async()=>{led.off().stop();res.writeContinue();}); "
+//   return code
+// };
+// javascriptGenerator.forBlock['TOPICO'] = function() {
+// const code = `setFixedTopic/charmander`
+//     // const code = "var on=false;var pin=D2;setInterval(function(){on=!on;digitalWrite(pin,on);},500)"
+//     // const code ="var on=true;var pin3=0;var pin5=14;pinMode(pin5,'output');pinMode(pin3,'output');digitalWrite(pin5, on);digitalWrite(pin3,!on);setTimeout(function(){digitalWrite(pin5,!on);digitalWrite(pin3,!on);},5000)"
+//   return code
+// };
+
+
+// ===============================================================================================================================================================
 
   // Blockly.Blocks['Concatenar_Strings'] = {
   //   init: function() {

@@ -20,6 +20,13 @@
     cursor: pointer;
 }
 
+/* Tamanho padrão do logo */
+.logo {
+  width: 60px;
+  height: auto;
+  display: block;
+}
+
 
 .btns {
     width: 250px;
@@ -38,6 +45,41 @@
 
 #FreeMode:hover, #Campaing:hover {
     border-bottom: 2px solid #04A8FF; 
+}
+
+@media (max-width: 768px) {
+  #logo {
+    width: auto !important;
+    height: auto !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+  }
+  #logo img {
+    width: auto !important;
+    height: 120px !important; /* ou 150px, ajuste conforme desejar */
+    max-width: none !important;
+    max-height: none !important;
+    display: block;
+  }
+}
+
+/* Garante que o logo cresce no mobile */
+@media (max-width: 768px) {
+  .logo {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+  .logo-img {
+    width: auto !important;
+    height: 120px !important;
+    max-width: none !important;
+    max-height: none !important;
+    display: block !important;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 
 

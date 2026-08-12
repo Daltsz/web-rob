@@ -1,6 +1,7 @@
 import "../Header/index.css"
-import Logo from "../../../assets/Logo.svg"
-import { useNavigate } from "react-router-dom";
+// import Logo from "../../../assets/Logo.svg"
+// import Logo from "../../../assets/LogicalEducLogosemescrita_semfundo.svg";
+import { useNavigate, Link } from "react-router-dom";
 
 
 function Header() {
@@ -11,7 +12,9 @@ function Header() {
 
         <div className="header">
             <div className="logo">
-                <img src={Logo} alt="Logo"/>
+                <Link to="/">
+                    <img src="/assets/LogicalEducLogosemescrita_semfundo.svg" alt="Logo Logical Educ" className="logo-img" />
+                </Link>
             </div>
 
             <div className="menu">
@@ -35,8 +38,8 @@ function Header() {
             </div>
 
             <div className="btnLogin">
-                <button id="btnEntrar" onClick={() => { navigate('/inicio') }}>Entrar</button>
-                <button id="btnCriarConta">Criar conta</button>
+                <button id="btnEntrar" onClick={() => {navigate('/login') }}>Entrar</button>
+                <button id="btnCriarConta" onClick={() => {navigate('/register')}}>Criar conta</button>
             </div>
         </div>
     )

@@ -18,7 +18,7 @@ body {
 #root{
   max-width: 100%;
   margin: 0 auto;
-  padding: 0 20 20;
+  padding: 0 5px 5px;
 }
 
 button{
@@ -28,4 +28,8 @@ button{
 code {
 font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
   monospace;
+}
+
+html {
+  scroll-behavior: smooth;
 }

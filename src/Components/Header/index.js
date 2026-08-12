@@ -1,27 +1,27 @@
-import React from 'react';
-import { useNavigate } from "react-router-dom";
-import logo from '../../assets/Logo.svg';
-import './style.css'
+import { useNavigate, Link } from "react-router-dom";
+import "../../Pages/BoasVindas/Header/index.css";   
 
 export default function Header() {
     const navigate = useNavigate()
     return (
-        <header className="container" >
-            <div className='menu'>
-
-                <button id='logo' onClick={() => { navigate('/') }}  >
-                    <img className="logo" src={logo} alt='Logo'></img>
+        <header className="header" >
+            <div className='logo'>
+                <Link to='/'>
+                    <img
+                        src="/assets/LogicalEducLogosemescrita_semfundo.svg"
+                        alt="Logo Logical Educ"
+                        className="logo-img"
+                    />
+                </Link>
+            </div>
+            <div className='btnLogin'>
+                <button id='FreeMode' className="header-btn" onClick={() => { navigate('/FreeMode') }}  >
+                    Modo Livre
                 </button>
 
-                <div className='btns'>
-                    <button id='FreeMode' onClick={() => { navigate('/FreeMode') }}  >
-                        Modo Livre
-                    </button>
-
-                    <button id='Campaing' onClick={() => { navigate('/Campaing') }}  >
-                        Campanha
-                    </button>
-                </div>
+                <button id='Campaing' className="header-btn" onClick={() => { navigate('/Campaing') }}  >
+                    Campanha
+                </button>
             </div>
         </header>
     );

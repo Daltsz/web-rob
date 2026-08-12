@@ -1,6 +1,18 @@
-.Inicio {
+/* .Inicio {
     margin-top: 25px;
     margin-left: 25px;
     margin-right: 25px;
-}
+} */
 
+.Inicio {
+    margin-top: 2rem;
+    padding-left: clamp(8px, 2vw, 24px);
+    padding-right: clamp(8px, 2vw, 24px);
+  }
+
+@media (max-width: 768px) {
+    .Inicio {
+        padding-left: 2vw;
+        padding-right: 2vw;
+    }
+}

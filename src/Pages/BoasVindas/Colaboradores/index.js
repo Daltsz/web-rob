@@ -1,8 +1,6 @@
 import "../Colaboradores/index.css"
 import Antonio  from   '../../../assets/Antonio.svg';
 import Dadalto from '../../../assets/Dadalto.svg';
-import Beatriz from '../../../assets/Beatriz.svg';
-import Higor from '../../../assets/Higor.svg';
 
 function Colaboradores(){
     return (
@@ -19,7 +17,7 @@ function Colaboradores(){
                     </p>
 
                     <p className="descricao-colab">
-                        Graphic design is a craft where professionals create visual content to communicate and the messages. By applying visual hierarchy and page layout techniques
+                        Professor da UTFPR, doutor em Computação e coordenador do projeto Ensino Lúdico de Lógica de Programação (ELLP), que desde 2014 promove o ensino de lógica de programação para crianças de escolas públicas de forma envolvente e acessivel
                     </p>
                 </div>
 
@@ -30,29 +28,7 @@ function Colaboradores(){
                     </p>
 
                     <p className="descricao-colab">
-                        Front-end web development is the practice of converting data to a graphical interface, through the use of HTML, CSS, and JavaScript.
-                    </p>
-                </div>
-
-                <div>
-                    <img src={Beatriz} alt="Beatriz Cristina" />
-                    <p className="nome-colab">
-                        Beatriz Cristina
-                    </p>
-
-                    <p className="descricao-colab">
-                        Front-end web development is the practice of converting data to a graphical interface, through the use of HTML, CSS, and JavaScript.
-                    </p>
-                </div>
-
-                <div>
-                    <img src={Higor} alt="Higor Rozzan" />
-                    <p className="nome-colab">
-                        Higor Rozzan
-                    </p>
-
-                    <p className="descricao-colab">
-                        Front-end web development is the practice of converting data to a graphical interface, through the use of HTML, CSS, and JavaScript.
+                        Engenheiro de Computação formado pela UTFPR, mestrando pela USP e pesquisador na aplicação de Inteligência Artificial à saúde e à análise de imagens médicas. Atua no desenvolvimento de soluções tecnológicas baseadas em IA, conectando pesquisa científica, inovação e impacto social. 
                     </p>
                 </div>
             </div>

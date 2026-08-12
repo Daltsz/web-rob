@@ -2,23 +2,43 @@ import "./FreeMode.css";
 import "../../Components/Blocks/customblocks";
 import { getDefaultToolBox } from "../../Components/Blockly/getDefaultToolBox";
 import { DEFAULT_OPTIONS } from "../../Components/Blockly/workspaceConfigs";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { BlocklyWorkspace, useBlocklyWorkspace} from "react-blockly";
 import {javascriptGenerator} from 'blockly/javascript';
-import {publishMessage}  from '../../Services/api'
+import { sendRobotCommand } from "../../Services/robots";
 import Header from '../../Components/Header';
+import PairRobotModal from "../../Components/Pair/pairRobotModal";
 
-const topico = "led_blink"
+// const topico = "pareamento/40:f5:20:28:dd:c7"
+
 
 export default function App() {
   const toolbox = getDefaultToolBox();
   const [workspaceCode, setWorkspaceCode] = useState('');
+  const [topic, setTopic] = useState(null);
+  const [showPairModal, setShowPairModal] = useState(false);
+  const [robot, setRobot] = useState(null);
   const blocklyRef = useRef(null);
   const { workspace } = useBlocklyWorkspace({
     toolboxConfiguration: toolbox,
     workspaceConfiguration: DEFAULT_OPTIONS,
     ref: blocklyRef,
   });
+
+
+  // useEffect(() => {
+  //   const savedTopic = localStorage.getItem("robotTopic");
+  //   if (savedTopic){
+  //     setTopic(savedTopic);
+  //     setShowPairModal(false);
+  //   } else {
+  //     setShowPairModal(true);
+  //   }
+  // }, []);
+  useEffect(() => {
+    // TEMPORÁRIO: sempre abrir o modal ao entrar na tela
+    setShowPairModal(true);
+  }, []);
 
   const handleCompileClick = () => {
     if (workspace) {
@@ -27,8 +47,9 @@ export default function App() {
       let code = javascriptGenerator.workspaceToCode(workspace);
       console.log(code)
       // code = code.split(/\s+(?=[^\s]*$)/)
-      code = [code]
-      code = code.map(s => s.replace(/\n$/, ''));
+      // code = [code]
+      // code = code.map(s => s.replace(/\n$/, ''));
+      code = code.replace(/\n$/, '');
       console.log(code)
       setWorkspaceCode(code);
       alert('Compilado Com Sucesso')
@@ -37,53 +58,124 @@ export default function App() {
         console.log('message error', err);
       }
     }
-  }
+  };
 
+  const handleRobotPaired = (robot) =>{
+    setRobot(robot)
+    setTopic(robot.topic);
+  }
 
   const handleClick = async (e) =>{
     e.preventDefault();
     try{
-      if(topico && workspaceCode){
-        console.log(workspaceCode[0])
-        let topicToSend = topico.trim();
-        let messageToSend = workspaceCode[0].toString('utf8');
-        console.log(messageToSend)
-        console.log(topicToSend)
-        publishMessage(topicToSend, messageToSend)
-        // client_MQTT.publish(topicToSend, messageToSend);
-        console.log('rrodou ')
-      }else{
-        alert('Please enter both topic and message');
-      }
-      // let resp = await api.post('/led-blink', workspaceCode);
-      // console.log(resp);
-      alert('Rodou Corretamente')
+      if (!robot){
+        alert("Nenhum robô pareado. Por favor, pareie seu robô primeiro.");
+        setShowPairModal(true);
+        return;
+      };
+
+      if(!workspaceCode){
+        alert('Nenhum código compilado. Clique em "Compilar" antes de controlar o robô.')
+        return; 
+      };
+
+      console.log(workspaceCode)
+      let topicToSend = topic.trim();
+      // let messageToSend = workspaceCode[0].toString('utf8');
+      // let messageToSend = String(workspaceCode);
+      // console.log(messageToSend)
+      console.log(topicToSend)
+      
+      await sendRobotCommand(robot.id, workspaceCode);
+      alert("Codigo enviado para o robo")
+      
+
+      // // publishMessage(topicToSend, messageToSend)
+      // const ok = publishMessage(topicToSend, messageToSend);
+      // if (!ok) {
+      //   // alert("Ainda não publicou: MQTT não está conectado (foi enfileirado).");
+      //   console.warn("Não publicou (MQTT não conectado)");
+      //   return;
+      // }
+      // // alert("Publicado no MQTT!");
+      // console.log("Publicado!");
+      // alert('Rodou Corretamente')
     }catch(err){
-      alert('Infelizmente não Rodou')
+      alert('Erro ao enviar comando')
       console.log('Mensagem Não Enviada', err);
     }
-  }
+  };
 
 
   return (
-
     <div>
       <header>
         <Header></Header>
       </header>
+      <div className="free_mode_topbar">
+        <button 
+          type="button"
+          className="free_mode_pair_button"
+          onClick={()=> setShowPairModal(true)}
+        >
+          Parear / Trocar Robô
+        </button>
+        {topic && (
+          <span className="free_mode_robot_info">
+            Robô conectado em: <strong>{topic}</strong>
+          </span>
+        )}
+      </div>
       <div  className="fill-height" ref={blocklyRef}>
         <BlocklyWorkspace/>
       </div>
       <div className="buttonsWorkSpace">
         <div className="code">{workspaceCode}</div>
-
         <div className="divBtns">
           <button className="Btns" onClick={handleCompileClick}>Compilar</button>
           <button  className="Btns" onClick={handleClick}>Controlar</button>
         </div>
-        
       </div>
-      
-  </div>
+      {showPairModal && (
+        <PairRobotModal
+          onClose={()=> setShowPairModal(false)
+
+            // ATIVAR NOVAMENTE AS LINHAS ABAIXO
+            // const savedTopic = localStorage.getItem("robotTopic")
+            // if (!savedTopic){
+            //   return;
+            // }
+            // setShowPairModal(false)
+            // ================================================================
+          }
+          onPaired = {handleRobotPaired}
+        />
+      )}
+      {/* {showPairModal && (
+        <div
+          style={{
+            position: 'fixed',
+            inset: 0,
+            backgroundColor: 'rgba(0,0,0,0.5)',
+            zIndex: 9999,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <div
+            style={{
+              background: '#fff',
+              padding: 24,
+              borderRadius: 12,
+            }}
+          >
+            <h2>TESTE MODAL INLINE</h2>
+            <p>Se você está vendo isso, o showPairModal está funcionando.</p>
+            <button onClick={() => setShowPairModal(false)}>Fechar teste</button>
+          </div>
+        </div>
+      )} */}
+    </div>
   );
 }

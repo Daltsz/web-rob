@@ -79,12 +79,16 @@ export const getDefaultToolBox = () => {
                 },
                 {
                     kind: "block",
-                    type: "piscarLedNew",
+                    type: "piscarLed2",
                 },
                 {
                     kind: "block",
                     type: "INICIO",
                 }
+                // {
+                //     kind: "block",
+                //     type: "TOPICO",
+                // }
                 ],
             }
         ]

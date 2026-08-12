@@ -8,9 +8,25 @@
     color: #424D65;
     width: 100%;
 }
-
+/* 
 .logo {
     margin-left: 35px;
+} */
+
+.logo {
+  margin-left: clamp(0.5rem, 3vw, 35px);
+}
+
+.menu {
+  flex: 1;
+}
+
+.logo img {
+  height: 60px;         /* era 48px */
+  max-width: 280px;     /* era 220px */
+  width: auto;
+  object-fit: contain;
+  display: block;
 }
 
 .menu ul {
@@ -20,25 +36,46 @@
     align-items: center;
     margin: 0;
     padding: 0;
+    font-size: 16px;      /* novo tamanho, mais discreto */
+}
+
+.menu a {
+  color: #1a1a1a;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.menu a:hover {
+  color: #04A8FF;
 }
 
 .menu li {
-    margin: 0 20px;
+    margin: 0 32px;       /* era 20px */
     cursor: pointer;
+}
+
+/* (Opcional) cor ao passar o mouse */
+.menu a:hover {
+  color: #04A8FF;          /* tom mais claro de vermelho */
 }
 
 .btnLogin {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    margin-right: 35px;
+    /* margin-right: 35px; */
+}
+
+.btnLogin {
+  margin-right: clamp(0.5rem, 3vw, 35px);
 }
 
 .btnLogin button {
     margin-left: 10px;
 }
 
-#btnEntrar {
+/* #btnEntrar {
     width: 42px;
     height: 23px;
     border: none;
@@ -48,16 +85,183 @@
     border-bottom: 2px solid #04A8FF; 
     padding: 2px 2px; 
     cursor: pointer; 
+} */
+
+#btnEntrar {
+  padding: 10px 20px;   /* era 6px 12px */
+  font-size: 18px;      /* era 14px */
+  font-family: 'Poppins';
+  font-weight: 500;
+  color: #04A8FF;
+  background-color: transparent;
+  border: 2px solid #04A8FF;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
 }
 
+#btnEntrar:hover {
+  background-color: #04A8FF;
+  color: white;
+}
+
+
+
 #btnCriarConta {
-    width: 120px;
-    height: 40px;
+    width: 150px;         /* era 120px */
+    height: 48px;         /* era 40px */
     cursor: pointer; 
     border-radius: 8px;
     background: #DEF4FE;
     border: none;
     font-family: 'Poppins';
-    font-size: 13px;
+    font-size: 16px;      /* era 13px */
     color: #04A8FF;
+}
+
+/* #btnCriarConta {
+  padding: 6px 12px;
+  font-size: 14px;
+  font-family: 'Poppins';
+  font-weight: 500;
+  color: #04A8FF;
+  background-color: transparent;
+  border: 2px solid #04A8FF;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+} */
+
+#btnCriarConta:hover {
+  background-color: #04A8FF;
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .menu ul {
+    flex-direction: column;
+    gap: 10px;
+    font-size: 15px;
+  }
+
+  .btnLogin {
+    margin-right: 0;
+    justify-content: center;
+  }
+
+  .logo {
+    margin-left: 0;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 1.2rem; /* Espaço entre logo e menu */
+  }
+
+  .logo img {
+    height: 48px;       /* era 36px */
+    max-width: 180px;   /* era 140px */
+  }
+  #btnEntrar, #btnCriarConta {
+    font-size: 15px;
+    padding: 8px 16px;
+  }
+  .menu ul {
+    margin-top: 0.8rem; /* Espaço entre logo e menu */
+    margin-bottom: 1.2rem; /* Espaço entre menu e botões */
+  }
+  .btnLogin {
+    margin-top: 1.2rem; /* Espaço entre contato e botões */
+  }
+}
+
+@media (min-width: 1200px) {
+  .logo img {
+    height: 80px;       /* era 64px */
+    max-width: 380px;   /* era 320px */
+  }
+}
+
+#btnEntrar,
+#btnCriarConta {
+  transition: 
+    background-color 0.3s,
+    color 0.3s,
+    box-shadow 0.3s,
+    transform 0.2s;
+}
+
+#btnEntrar:hover,
+#btnCriarConta:hover {
+  box-shadow: 0 2px 12px 0 rgba(4, 168, 255, 0.15);
+  transform: translateY(-2px) scale(1.04);
+}
+
+.logo a {
+  display: inline-block;
+  transition: 
+    box-shadow 0.2s,
+    background 0.2s,
+    border-color 0.2s,
+    transform 0.2s; /* adicione esta linha */
+  border-radius: 12px;
+  padding: 4px;
+  border: 2px solid transparent;
+  box-sizing: border-box;
+}
+
+.logo a:hover {
+  box-shadow: 0 4px 16px 0 rgba(4, 168, 255, 0.18), 0 1.5px 8px 0 rgba(66, 77, 101, 0.10);
+  background: #eaf7ff;
+  border-color: #04A8FF;
+  transform: translateY(-2px) scale(1.04); /* igual aos botões */
+}
+
+.logo-img {
+  cursor: pointer;
+  /* Se quiser limitar o tamanho, pode manter as regras já existentes */
+}
+
+.header {
+  border-bottom: 1px solid #eaf7ff;
+}
+
+
+.header-btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-family: 'Poppins';
+  font-weight: 500;
+  color: #04A8FF;
+  background-color: #DEF4FE;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition:
+    background-color 0.3s,
+    color 0.3s,
+    box-shadow 0.3s,
+    transform 0.2s;
+}
+
+/* Hover igual aos outros botões */
+.header-btn:hover {
+  background-color: #04A8FF;
+  color: white;
+  box-shadow: 0 2px 12px 0 rgba(4, 168, 255, 0.15);
+  transform: translateY(-2px) scale(1.04);
+}
+
+.btnLogin {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-right: clamp(0.5rem, 3vw, 35px);
+  gap: 10px; /* adiciona espaço entre Modo Livre e Campanha */
 }

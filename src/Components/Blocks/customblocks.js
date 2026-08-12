@@ -19,21 +19,26 @@ Blockly.Blocks['Para_Frente'] = {
 
 javascriptGenerator.forBlock['Para_Frente'] = function() {
   const code = `
-motor1_pin1 = machine.Pin(0, machine.Pin.OUT)
-motor1_pin2 = machine.Pin(14, machine.Pin.OUT)
-motor2_pin1 = machine.Pin(12, machine.Pin.OUT)
-motor2_pin2 = machine.Pin(13, machine.Pin.OUT)
-motor1_pin1.value(1)
-motor1_pin2.value(0)
-motor2_pin1.value(1)
-motor2_pin2.value(0)
-time.sleep(5)
-motor1_pin1.value(0)
-motor1_pin2.value(0)
-motor2_pin1.value(0)
-motor2_pin2.value(0)
-`
-  return [code]
+in1 = machine.Pin(5, machine.Pin.OUT)
+in2 = machine.Pin(4, machine.Pin.OUT)
+en1 = machine.Pin(14, machine.Pin.OUT)
+in3 = machine.Pin(12, machine.Pin.OUT)
+in4 = machine.Pin(13, machine.Pin.OUT)
+en2 = machine.Pin(15, machine.Pin.OUT)
+en1.value(1)
+en2.value(1)
+in1.value(1)
+in2.value(0)
+in3.value(1)
+in4.value(0)
+time.sleep(2)
+in1.value(0)
+in2.value(0)
+in3.value(0)
+in4.value(0)
+en1.value(0)
+en2.value(0)`
+  return code
 };
 
   
@@ -53,20 +58,26 @@ Blockly.Blocks['Para_Tras'] = {
 
 javascriptGenerator.forBlock['Para_Tras'] = function() {
   const code = `
-motor1_pin1 = machine.Pin(0, machine.Pin.OUT)
-motor1_pin2 = machine.Pin(14, machine.Pin.OUT)
-motor2_pin1 = machine.Pin(12, machine.Pin.OUT)
-motor2_pin2 = machine.Pin(13, machine.Pin.OUT)
-motor1_pin1.value(0)
-motor1_pin2.value(1)
-motor2_pin1.value(0)
-motor2_pin2.value(1)
-time.sleep(5)
-motor1_pin1.value(0)
-motor1_pin2.value(0)
-motor2_pin1.value(0)
-motor2_pin2.value(0)`
-  return [code]
+in1 = machine.Pin(5, machine.Pin.OUT)
+in2 = machine.Pin(4, machine.Pin.OUT)
+en1 = machine.Pin(14, machine.Pin.OUT)
+in3 = machine.Pin(12, machine.Pin.OUT)
+in4 = machine.Pin(13, machine.Pin.OUT)
+en2 = machine.Pin(15, machine.Pin.OUT)
+en1.value(1)
+en2.value(1)
+in1.value(0)
+in2.value(1)
+in3.value(0)
+in4.value(1)
+time.sleep(2)
+in1.value(0)
+in2.value(0)
+in3.value(0)
+in4.value(0)
+en1.value(0)
+en2.value(0)`
+  return code
 };
 
   
@@ -85,20 +96,25 @@ Blockly.Blocks['Esquerda'] = {
 
 javascriptGenerator.forBlock['Esquerda'] = function() {
   const code = `
-motor1_pin1 = machine.Pin(0, machine.Pin.OUT)
-motor1_pin2 = machine.Pin(14, machine.Pin.OUT)
-motor2_pin1 = machine.Pin(12, machine.Pin.OUT)
-motor2_pin2 = machine.Pin(13, machine.Pin.OUT)
-motor1_pin1.value(0)
-motor1_pin2.value(1) 
-motor2_pin1.value(1)
-motor2_pin2.value(0)
-time.sleep(5)
-motor1_pin1.value(0)
-motor1_pin2.value(0)
-motor2_pin1.value(0)
-motor2_pin2.value(0)
-`
+in1 = machine.Pin(5, machine.Pin.OUT)
+in2 = machine.Pin(4, machine.Pin.OUT)
+en1 = machine.Pin(14, machine.Pin.OUT)
+in3 = machine.Pin(12, machine.Pin.OUT)
+in4 = machine.Pin(13, machine.Pin.OUT)
+en2 = machine.Pin(15, machine.Pin.OUT)
+en1.value(1)
+en2.value(1)
+in1.value(0)
+in2.value(1)
+in3.value(1)
+in4.value(0)
+time.sleep(2)
+in1.value(0)
+in2.value(0)
+in3.value(0)
+in4.value(0)
+en1.value(0)
+en2.value(0)`
   return code
 };
   
@@ -119,20 +135,25 @@ Blockly.Blocks['Direita'] = {
 
 javascriptGenerator.forBlock['Direita'] = function() {
   const code = `
-motor1_pin1 = machine.Pin(0, machine.Pin.OUT)
-motor1_pin2 = machine.Pin(14, machine.Pin.OUT)
-motor2_pin1 = machine.Pin(12, machine.Pin.OUT)
-motor2_pin2 = machine.Pin(13, machine.Pin.OUT)
-motor1_pin1.value(1)
-motor1_pin2.value(0) 
-motor2_pin1.value(0)
-motor2_pin2.value(1)
-time.sleep(5)
-motor1_pin1.value(0)
-motor1_pin2.value(0)
-motor2_pin1.value(0)
-motor2_pin2.value(0)  
-`
+in1 = machine.Pin(5, machine.Pin.OUT)
+in2 = machine.Pin(4, machine.Pin.OUT)
+en1 = machine.Pin(14, machine.Pin.OUT)
+in3 = machine.Pin(12, machine.Pin.OUT)
+in4 = machine.Pin(13, machine.Pin.OUT)
+en2 = machine.Pin(15, machine.Pin.OUT)
+en1.value(1)
+en2.value(1)
+in1.value(1)
+in2.value(0)
+in3.value(0)
+in4.value(1)
+time.sleep(2)
+in1.value(0)
+in2.value(0)
+in3.value(0)
+in4.value(0)
+en1.value(0)
+en2.value(0)`
   return code
 };
 
@@ -186,22 +207,25 @@ Blockly.Blocks['mexerMotor'] = {
 javascriptGenerator.forBlock['mexerMotor'] = function() {
   //const code ="var on=true;var pin3=0;var pin5=14;pinMode(pin5,'output');pinMode(pin3,'output');digitalWrite(pin5, on);digitalWrite(pin3,!on);setTimeout(function(){digitalWrite(pin5,!on);digitalWrite(pin3,!on);},5000)"
   const code = `
-motor_pin1 = machine.Pin(0, machine.Pin.OUT)
-motor_pin2 = machine.Pin(14, machine.Pin.OUT)
-motor_pin1.value(1)
-motor_pin2.value(0)
+in1 = machine.Pin(5, machine.Pin.OUT)
+in2 = machine.Pin(4, machine.Pin.OUT)
+en1 = machine.Pin(14, machine.Pin.OUT)
+en1.value(1)
+in1.value(1)
+in2.value(0)
 time.sleep(5)
-motor_pin1.value(0)
-motor_pin2.value(0)`
+in1.value(0)
+in2.value(0)
+en1.value(0)`
   return code
 };
 
 
    
-Blockly.Blocks['piscarLedNew'] = {
+Blockly.Blocks['piscarLed2'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField("piscar Led New");
+        .appendField("piscar Led 2");
     this.setOutput(true, "String");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
@@ -214,7 +238,7 @@ Blockly.Blocks['piscarLedNew'] = {
 //   const code = "led.blink(1000);board.wait(10000,async()=>{led.off().stop();res.writeContinue();}); "
 //   return code
 // };
-javascriptGenerator.forBlock['piscarLedNew'] = function() {
+javascriptGenerator.forBlock['piscarLed2'] = function() {
   //const code = "var on=false;var pin=D2;var duration=5000;var interval=500;var intervalID=setInterval(function(){on=!on;digitalWrite(pin,on);},interval);setTimeout(function(){clearInterval(intervalID);digitalWrite(pin,true);},duration)"
   // const code ="var on=true;var pin3=0;var pin5=14;pinMode(pin5,'output');pinMode(pin3,'output');digitalWrite(pin5, on);digitalWrite(pin3,!on);setTimeout(function(){digitalWrite(pin5,!on);digitalWrite(pin3,!on);},5000)"
 const code = `
@@ -283,6 +307,40 @@ import time`
 return code;
 };
 
+
+
+
+//================   Codigo para proximas atualizações =============================
+
+
+
+// Blockly.Blocks['TOPICO'] = {
+//   init: function() {
+//     this.appendDummyInput()
+//         .appendField("TOPICO");
+//     this.setOutput(true, "String");
+//     this.setPreviousStatement(true, null);
+//     this.setColour(70);
+//     this.setTooltip("");
+//     this.setHelpUrl("");
+//   }
+// };
+
+
+
+// javascriptGenerator.forBlock['piscarLed'] = function() {
+//   const code = "led.blink(1000);board.wait(10000,async()=>{led.off().stop();res.writeContinue();}); "
+//   return code
+// };
+// javascriptGenerator.forBlock['TOPICO'] = function() {
+// const code = `setFixedTopic/charmander`
+//     // const code = "var on=false;var pin=D2;setInterval(function(){on=!on;digitalWrite(pin,on);},500)"
+//     // const code ="var on=true;var pin3=0;var pin5=14;pinMode(pin5,'output');pinMode(pin3,'output');digitalWrite(pin5, on);digitalWrite(pin3,!on);setTimeout(function(){digitalWrite(pin5,!on);digitalWrite(pin3,!on);},5000)"
+//   return code
+// };
+
+
+// ===============================================================================================================================================================
 
   // Blockly.Blocks['Concatenar_Strings'] = {
   //   init: function() {

@@ -1,27 +1,28 @@
+
 .p-contato {
-    color: #594D43;
-    font-family: 'Poppins';
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 14px; 
-    letter-spacing: 8.4px;
-    margin-bottom: 8px;
-    margin-top: 61px;
+  font-family: 'Poppins';
+  font-size: 17px; /* um pouco maior */
+  font-weight: bold; /* agora em negrito */
+  color: #3D475E;
+  margin: 1.5rem 0 0.1rem 0; /* aumentou o espaço superior para 1.5rem */
+  letter-spacing: 0.5px;
+  /* text-transform: uppercase; */ /* opcional */
 }
 
 .p-email{
     color: #2A2E36;
     font-family: 'Poppins';
-    font-size: 30px;
+    font-size: 16px; /* diminuiu ainda mais */
     font-style: normal;
-    font-weight: 700;
-    line-height: 40px; /* 133.333% */
+    font-weight: 700; /* voltou o negrito */
+    line-height: 22px; /* ajustado para o novo tamanho */
     letter-spacing: -0.6px;
-    margin-top: 0;
+    margin-top: 0.22rem; /* aumentou 10% (de 0.2rem) */
 }
 
-.p-links {
+
+
+/* .p-links {
     color: #3D475E;
     font-family: 'Poppins';
     font-size: 15px;
@@ -37,7 +38,18 @@
     font-weight: 600;
     padding-left: 18px;
 
+} */
+
+.p-links,
+.p-links-navegacao {
+  font-family: 'Poppins';
+  font-size: 15px;
+  font-weight: 600;
+  color: #3D475E;
+  margin-bottom: 0.5rem;
 }
+
+
 
 .direito li {
     color: #4A556D;
@@ -49,28 +61,70 @@
     list-style: none;
 }
 
-.links ul {
+/* .links ul {
     padding-left: 0px;
     margin-bottom: 16px;
     margin-top: 33px;
+} */
+
+/* Listas */
+.links ul,
+.navegacao ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 
 
+/* 
 #footer {
     display: flex;
     justify-content: space-between;
     padding-top: 95px;
     padding-bottom: 95px;
+} */
+
+#footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start; /* <-- Adicione esta linha */
+  gap: 2rem;
+  padding: 95px clamp(1rem, 5vw, 60px); /* espaçamento lateral fluido */
 }
+
+
+
 
 .direito {
-    display: flex;
-    align-items: center;
-    margin-right: 171px;
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
+
+.direito li {
+  font-family: 'Poppins';
+  font-size: 14px;
+  color: #4A556D;
+  line-height: 30px;
+}
+
+
+
+.links,
 .navegacao {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1.5rem; /* igual ao margin-top do logo */
+}
+
+
+
+
+/* .navegacao {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -79,12 +133,31 @@
 
 .links {
     margin-bottom: 29px;
-}
+} */
 
-.esquerdo-contato{
+
+
+/* .esquerdo-contato{
     margin-left: 115px;
+} */
+
+.esquerdo-contato {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 250px;
+  align-items: flex-start; /* Garante alinhamento à esquerda */
 }
 
+
+.esquerdo-contato img {
+  width: 100%;        /* ocupa toda a largura da coluna… */
+  /* max-width: 100px;   …mas nunca passa de 150 px       */
+  height: auto;       /* mantém proporção                */
+}
+
+
+/* 
 .p-footer {
     color: #4A556D;
 
@@ -93,13 +166,71 @@
     font-size: 14px;
     font-style: normal;
     font-weight: 500;
-    line-height: 25px; /* 178.571% */
+    line-height: 25px; 
     letter-spacing: -0.14px;
     opacity: 0.7;
     padding-bottom: 40px;
+} */
+
+
+/* Rodapé inferior */
+.p-footer {
+  text-align: center;
+  font-family: 'Poppins';
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 25px;
+  letter-spacing: -0.14px;
+  opacity: 0.7;
+  padding-bottom: 18px; /* reduziu mais 10% */
+  padding-inline: clamp(1rem, 5vw, 60px);
+  margin-top: 0.9rem;    /* reduziu mais 10% */
 }
 
 a {
     text-decoration: none;
     color: #4A556D;
+}
+
+.fundo {
+  padding-inline: clamp(2rem, 8vw, 80px);
+}
+
+.footer-logo {
+  height: 60px;
+  max-width: 200px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+  margin: 0;
+  margin-top: 1.65rem; /* aumentou 10% (de 1.5rem) */
+  margin-bottom: 0.7rem; /* aumentou o espaço entre logo e contato */
+}
+
+@media (max-width: 768px) {
+  #footer {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .esquerdo-contato,
+  .direito {
+    align-items: center;
+  }
+
+  .links,
+  .navegacao {
+    align-items: center;
+  }
+
+  .p-links,
+  .p-links-navegacao {
+    text-align: center;
+  }
+
+  .footer-logo {
+    height: 120px;      /* era 60px, agora 2x maior */
+    max-width: 400px;  /* era 200px, agora 2x maior */
+  }
 }

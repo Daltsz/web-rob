@@ -1,0 +1,157 @@
+/* .headerLogin {
+    display: flex;
+    background: #ffffff;
+} */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    font-family: 'Poppins';
+    font-size: 14px;
+    color: #424D65;
+    width: 100%;
+}
+
+.logo {
+  margin-left: clamp(0.5rem, 3vw, 35px);
+}
+
+
+.containerLogin {
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.containerLeft {
+    margin-top: 150px;
+}
+
+.containerRight {
+    margin-top: 30px;
+}
+
+.menuLogin {
+    margin-top: 20px;
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+}
+
+.logoLogin {
+    border: none;
+    background-color: transparent;
+    margin-left: 80px;
+    cursor: pointer;
+}
+
+.frase {
+    width: 574px;
+    font-family: 'Poppins';
+    font-weight: 600;
+    font-size: 50px;
+    line-height: 75px;
+    margin-bottom: 40px;
+}
+
+.isCount, .createCount {
+    font-family: 'Poppins';
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    margin-bottom: 0;
+}
+
+.createCount {
+    display: inline-block;          
+    color: #04A8FF;                
+    cursor: pointer;                
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.createCount:hover {
+    transform: scale(1.08) translateY(-2px);  /* cresce e sobe um pouquinho */
+    color: #0088dd;                           /* opcional: muda um pouco a cor */
+}
+
+
+.forgotPasswordLink {
+  display: inline-block;
+  cursor: pointer;
+
+  /* herda estilo básico do textForm, mas você pode ajustar se quiser */
+  font-family: 'Poppins';
+  font-size: 14px;
+
+  color: #6c757d; /* parecido com text-muted */
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.forgotPasswordLink:hover {
+  transform: scale(1.05) translateY(-1px);
+  color: #04A8FF;
+  text-decoration: underline;
+}
+
+
+.backToLoginLink {
+  display: inline-block;           /* pra permitir transform */
+  cursor: pointer;
+  margin-top: 8px;
+
+  font-family: 'Poppins';          /* opcional: deixa igual ao resto */
+  font-size: 14px;                 /* ajusta se quiser */
+  color: #6c757d;                  /* cor padrão (tipo text-muted) */
+
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.backToLoginLink:hover {
+  transform: scale(1.05) translateY(-1px);
+  color: #04A8FF;
+  text-decoration: underline;
+}
+
+
+.entrar {
+    font-family: 'Poppins';
+    font-weight: 500;
+    font-size: 30px;
+    line-height: 45px;
+}
+
+.form {
+    width: 370px;
+    height: 62px;
+    border-radius: 8px;
+    background-color: #F0EFFF !important;
+    font-family: 'Poppins';
+    font-size: 13px;
+    line-height: 22px;
+    border: none;
+}
+
+::placeholder {
+    color: #A7A3FF !important;
+}
+
+.btnEntrar {
+    width: 370px;
+    height: 59px;
+    color: #ffffff;
+    font-family: 'Poppins';
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 24px;
+    box-shadow: 0px 4px 61px 0px #4D47C366;
+    background-color: #00D9FF;
+    border: none;
+}
+
+.textForm {
+    font-family: 'Poppins';
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 20px;
+}

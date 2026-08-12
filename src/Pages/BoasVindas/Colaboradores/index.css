@@ -1,37 +1,92 @@
-.h1Colaboradores {
+/* .h1Colaboradores {
     color: #2A2E36;
     text-align: center;
     font-family: 'Poppins';
     font-size: 90px;
     font-weight: 600;
     letter-spacing: -1.8px;
+} */
+
+
+.h1Colaboradores {
+  color: #2A2E36;
+  text-align: center;
+  font-family: 'Poppins';
+  font-size: clamp(2.5rem, 8vw, 90px);
+  font-weight: 600;
+  letter-spacing: -1.8px;
+  margin-bottom: 4rem; /* era 8rem, agora mais próximo dos cards */
 }
 
-#colaboradores{
+/* #colaboradores{
     margin-top: 150px;
+} */
+
+
+#colaboradores {
+  margin-top: 150px;
+  padding-inline: clamp(1rem, 5vw, 60px);
 }
 
-.cards {
+
+
+/* .cards {
     display: flex;
     justify-content: space-evenly;
     margin-top: 130px;
     margin-bottom: 150px;
+} */
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 3rem;
+  margin-bottom: 150px;
 }
 
-.cards img {
+.cards > div {
+  max-width: 300px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* .cards img {
     display: flex;
     margin: auto;
+} */
+
+.cards img {
+  max-width: 180px; /* era 100%, agora maior e fixo para destaque */
+  height: 180px;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0 4px 16px 0 rgba(66, 77, 101, 0.10);
 }
 
-.nome-colab {
+
+/* .nome-colab {
     text-align: center;
     color: #2A2E36;
     font-family: 'Poppins';
     font-size: 24px;
     font-weight: 700;
     line-height: 132.5%; 
-}
+} */
 
+
+.nome-colab {
+  text-align: center;
+  color: #2A2E36;
+  font-family: 'Poppins';
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 132.5%;
+  margin-top: 1rem;
+}
+/* 
 .descricao-colab{
     color: #525D73;
     font-family: 'Poppins';
@@ -40,4 +95,16 @@
     font-weight: 400;
     line-height: 26px;
     width: 318px;
+} */
+
+
+.descricao-colab {
+  color: #525D73;
+  font-family: 'Poppins';
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 26px;
+  width: 100%;
+  max-width: 318px;
+  margin-top: 0.5rem;
 }

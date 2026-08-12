@@ -10,7 +10,7 @@ import Principal from "./Principal";
 function BoasVindas() {
 
     return (
-        <div className="Inicio">
+        <div className="Inicio" id='inicio'>
             <style>{`
                 body {
                 overflow: auto;
@@ -18,9 +18,19 @@ function BoasVindas() {
             `}</style>
 
             <Principal />
-            <Sobre />
-            <Tutorial />
-            <Colaboradores />
+
+            <div id="section-sobre">
+                <Sobre />
+            </div>
+
+            <div id="tutorial">
+                <Tutorial />
+            </div>
+
+            <div id="colaboradores">
+                <Colaboradores />
+            </div>
+
             <Footer />
         </div>
     )

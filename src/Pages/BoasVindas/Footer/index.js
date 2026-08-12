@@ -1,5 +1,4 @@
 import "../Footer/index.css"
-import Logo from "../../../assets/Logo.svg"
 
 function Footer() {
     return (
@@ -7,7 +6,15 @@ function Footer() {
 
             <div id="footer">
                 <div className="esquerdo-contato">
-                    <img src={Logo} alt="Logo" />
+                    <div className="footer-logo-container">
+                        <a href="#inicio">
+                            <img
+                                src="/assets/LogicalEducLogo_sem_fundo_com_escrita.svg"
+                                alt="Logo Logical Educ"
+                                className="footer-logo"
+                            />
+                        </a>
+                    </div>
 
                     <p className="p-contato">contato</p>
                     <p className="p-email">email@gmail.com</p>
@@ -48,7 +55,7 @@ function Footer() {
 
             </div>
 
-            <p className="p-footer">© 2023 Feito por <a href="https://github.com/BeaComp" target="_blank">Beatriz Cristina de Faria</a></p>
+            <p className="p-footer">© 2024 LogicalEduc. All rights reserved.</p>
         </div>
     )
 }

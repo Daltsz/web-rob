@@ -1,157 +1,163 @@
-/* .headerLogin {
-    display: flex;
-    background: #ffffff;
-} */
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    font-family: 'Poppins';
-    font-size: 14px;
-    color: #424D65;
-    width: 100%;
+.login-page .login-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 10px;
+  color: #424D65;
+  font-family: 'Poppins';
+  font-size: 14px;
+  border-bottom: 1px solid #eaf7ff;
 }
 
-.logo {
+.login-page .login-logo {
   margin-left: clamp(0.5rem, 3vw, 35px);
 }
 
-
-.containerLogin {
-    margin-top: 50px;
-    display: flex;
-    justify-content: space-evenly;
-}
-
-.containerLeft {
-    margin-top: 150px;
-}
-
-.containerRight {
-    margin-top: 30px;
-}
-
-.menuLogin {
-    margin-top: 20px;
-    display: flex;
-    width: 100%;
-    justify-content: flex-start;
-}
-
-.logoLogin {
-    border: none;
-    background-color: transparent;
-    margin-left: 80px;
-    cursor: pointer;
-}
-
-.frase {
-    width: 574px;
-    font-family: 'Poppins';
-    font-weight: 600;
-    font-size: 50px;
-    line-height: 75px;
-    margin-bottom: 40px;
-}
-
-.isCount, .createCount {
-    font-family: 'Poppins';
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
-    margin-bottom: 0;
-}
-
-.createCount {
-    display: inline-block;          
-    color: #04A8FF;                
-    cursor: pointer;                
-    transition: transform 0.2s ease, color 0.2s ease;
-}
-
-.createCount:hover {
-    transform: scale(1.08) translateY(-2px);  /* cresce e sobe um pouquinho */
-    color: #0088dd;                           /* opcional: muda um pouco a cor */
-}
-
-
-.forgotPasswordLink {
+.login-page .login-logo a {
   display: inline-block;
-  cursor: pointer;
+  padding: 4px;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  box-sizing: border-box;
+}
 
-  /* herda estilo básico do textForm, mas você pode ajustar se quiser */
+.login-page .login-logo-img {
+  display: block;
+  width: auto;
+  height: 60px;
+  max-width: 280px;
+  object-fit: contain;
+  cursor: pointer;
+}
+
+.login-page .containerLogin {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 50px;
+}
+
+.login-page .containerLeft {
+  margin-top: 150px;
+}
+
+.login-page .containerRight {
+  margin-top: 30px;
+}
+
+.login-page .menuLogin {
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+  margin-top: 20px;
+}
+
+.login-page .logoLogin {
+  margin-left: 80px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.login-page .frase {
+  width: 574px;
+  margin-bottom: 40px;
+  font-family: 'Poppins';
+  font-weight: 600;
+  font-size: 50px;
+  line-height: 75px;
+}
+
+.login-page .isCount,
+.login-page .createCount {
+  margin-bottom: 0;
+  font-family: 'Poppins';
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.login-page .createCount {
+  display: inline-block;
+  color: #04A8FF;
+  cursor: pointer;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.login-page .createCount:hover {
+  transform: scale(1.08) translateY(-2px);
+  color: #0088dd;
+}
+
+.login-page .forgotPasswordLink {
+  display: inline-block;
+  color: #6c757d;
   font-family: 'Poppins';
   font-size: 14px;
-
-  color: #6c757d; /* parecido com text-muted */
-  transition: transform 0.2s ease, color 0.2s ease;
-}
-
-.forgotPasswordLink:hover {
-  transform: scale(1.05) translateY(-1px);
-  color: #04A8FF;
-  text-decoration: underline;
-}
-
-
-.backToLoginLink {
-  display: inline-block;           /* pra permitir transform */
   cursor: pointer;
-  margin-top: 8px;
-
-  font-family: 'Poppins';          /* opcional: deixa igual ao resto */
-  font-size: 14px;                 /* ajusta se quiser */
-  color: #6c757d;                  /* cor padrão (tipo text-muted) */
-
   transition: transform 0.2s ease, color 0.2s ease;
 }
 
-.backToLoginLink:hover {
+.login-page .forgotPasswordLink:hover {
   transform: scale(1.05) translateY(-1px);
   color: #04A8FF;
   text-decoration: underline;
 }
 
-
-.entrar {
-    font-family: 'Poppins';
-    font-weight: 500;
-    font-size: 30px;
-    line-height: 45px;
+.login-page .backToLoginLink {
+  display: inline-block;
+  margin-top: 8px;
+  color: #6c757d;
+  font-family: 'Poppins';
+  font-size: 14px;
+  cursor: pointer;
+  transition: transform 0.2s ease, color 0.2s ease;
 }
 
-.form {
-    width: 370px;
-    height: 62px;
-    border-radius: 8px;
-    background-color: #F0EFFF !important;
-    font-family: 'Poppins';
-    font-size: 13px;
-    line-height: 22px;
-    border: none;
+.login-page .backToLoginLink:hover {
+  transform: scale(1.05) translateY(-1px);
+  color: #04A8FF;
+  text-decoration: underline;
 }
 
-::placeholder {
-    color: #A7A3FF !important;
+.login-page .entrar {
+  font-family: 'Poppins';
+  font-weight: 500;
+  font-size: 30px;
+  line-height: 45px;
 }
 
-.btnEntrar {
-    width: 370px;
-    height: 59px;
-    color: #ffffff;
-    font-family: 'Poppins';
-    font-weight: 500;
-    font-size: 15px;
-    line-height: 24px;
-    box-shadow: 0px 4px 61px 0px #4D47C366;
-    background-color: #00D9FF;
-    border: none;
+.login-page .form {
+  width: 370px;
+  height: 62px;
+  border: none;
+  border-radius: 8px;
+  background-color: #F0EFFF !important;
+  font-family: 'Poppins';
+  font-size: 13px;
+  line-height: 22px;
 }
 
-.textForm {
-    font-family: 'Poppins';
-    font-weight: 400;
-    font-size: 13px;
-    line-height: 20px;
+.login-page ::placeholder {
+  color: #A7A3FF !important;
+}
+
+.login-page .btnEntrar {
+  width: 370px;
+  height: 59px;
+  border: none;
+  background-color: #00D9FF;
+  box-shadow: 0px 4px 61px 0px #4D47C366;
+  color: #ffffff;
+  font-family: 'Poppins';
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 24px;
+}
+
+.login-page .textForm {
+  font-family: 'Poppins';
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 20px;
 }

@@ -1,8 +1,8 @@
-body {
+body.blockly-games-page-active{
     overflow: hidden;
 }
 
-#graph {
+body.blockly-games-page-active #graph{
     position: absolute;
     bottom: 25px;
     height: 15px;
@@ -10,7 +10,7 @@ body {
     border: 1px solid #ddd;
 }
 
-#graphValue {
+body.blockly-games-page-active #graphValue{
     height: 15px;
     width: 0;
     background-color: #0d0;
@@ -18,19 +18,19 @@ body {
     transition-duration: 1s;
 }
 
-#blockly {
+body.blockly-games-page-active #blockly{
     position: fixed;
 }
 
-#help {
+body.blockly-games-page-active #help{
     overflow: hidden;
 }
 
-#sample {
+body.blockly-games-page-active #sample{
     height: 205px;
     width: 300px;
 }
-.code{
+body.blockly-games-page-active .code{
     background-color: #10d5f8c7;
     width: 400px;
     max-height: 50px;
@@ -46,7 +46,7 @@ body {
     margin-left: 93px;
 }
 
-#blocklyDiv {
+body.blockly-games-page-active #blocklyDiv{
     height: 50%;
     width: 100%;
     position: absolute;

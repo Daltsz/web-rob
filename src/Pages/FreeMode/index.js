@@ -108,7 +108,7 @@ export default function App() {
 
 
   return (
-    <div>
+    <div className="free-mode-page">
       <header>
         <Header></Header>
       </header>
@@ -126,14 +126,14 @@ export default function App() {
           </span>
         )}
       </div>
-      <div  className="fill-height" ref={blocklyRef}>
+      <div  className="free-mode-workspace" ref={blocklyRef}>
         <BlocklyWorkspace/>
       </div>
-      <div className="buttonsWorkSpace">
-        <div className="code">{workspaceCode}</div>
-        <div className="divBtns">
-          <button className="Btns" onClick={handleCompileClick}>Compilar</button>
-          <button  className="Btns" onClick={handleClick}>Controlar</button>
+      <div className="free-mode-actions">
+        <div className="free-mode-code">{workspaceCode}</div>
+        <div className="free-mode-buttons">
+          <button className="free-mode-action-button" onClick={handleCompileClick}>Compilar</button>
+          <button  className="free-mode-action-button" onClick={handleClick}>Controlar</button>
         </div>
       </div>
       {showPairModal && (

@@ -7,7 +7,7 @@ function Principal() {
 
   return (
     <>
-      <div className='fundo'>
+      <div className='welcome-hero-background'>
         <Header />
 
         <div className='principal'>

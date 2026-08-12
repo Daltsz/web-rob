@@ -1,4 +1,4 @@
-html, body {
+html body.blockly-games-page-active, body.blockly-games-page-active{
   height: 100%;
   width: 100%;
   padding: 0;
@@ -6,20 +6,20 @@ html, body {
   overflow: hidden;
 }
 
-#languageMenu {
+body.blockly-games-page-active #languageMenu{
   position: absolute;
   top: 0;
 }
 
-html[dir="LTR"] #languageMenu {
+html[dir="LTR"] body.blockly-games-page-active #languageMenu{
   right: 1em;
 }
 
-html[dir="RTL"] #languageMenu {
+html[dir="RTL"] body.blockly-games-page-active #languageMenu{
   left: 1em;
 }
 
-#header {
+body.blockly-games-page-active #header{
   position: absolute;
   top: 1em;
   left: 20%;
@@ -28,32 +28,32 @@ html[dir="RTL"] #languageMenu {
   text-align: center;
 }
 
-#banner {
+body.blockly-games-page-active #banner{
   padding: 1em;
 }
 
-#subtitle {
+body.blockly-games-page-active #subtitle{
   font-style: italic;
 }
 
-a {
+body.blockly-games-page-active a{
   outline: none;
   text-decoration: none;
 }
 
-#clearDataPara {
+body.blockly-games-page-active #clearDataPara{
   position: absolute;
   bottom: 0;
   margin: 1em;
 }
 
-#clearData {
+body.blockly-games-page-active #clearData{
   padding: 0 4px;
   margin: 5px 10px;
   font-size: medium;
 }
 
-#path {
+body.blockly-games-page-active #path{
   stroke: #ccc;
   stroke-width: 1;
   stroke-linecap: round;
@@ -69,97 +69,95 @@ a {
   }
 }
 
-.iconBack {
+body.blockly-games-page-active .iconBack{
   fill: #fff;
 }
 
-.iconBorder {
+body.blockly-games-page-active .iconBorder{
   stroke: #aaa;
   stroke-width: 5;
   fill: rgba(0, 0, 0, .1);
 }
 
-a:focus > .iconBorder,
-a:hover > .iconBorder {
+body.blockly-games-page-active a:focus > .iconBorder, body.blockly-games-page-active a:hover > .iconBorder{
   fill: rgba(255, 255, 255, .1);
 }
 
-a:focus > text,
-a:hover > text {
+body.blockly-games-page-active a:focus > text, body.blockly-games-page-active a:hover > text{
   fill: #666;
 }
 
-.icon {
+body.blockly-games-page-active .icon{
   animation: pop .5s cubic-bezier(.5,.5,.5,1.5) forwards;
   visibility: hidden;
 }
 
-.icon text {
+body.blockly-games-page-active .icon text{
   text-anchor: middle;
   font-size: 18pt;
 }
 
-#icon-puzzle {
+body.blockly-games-page-active #icon-puzzle{
   animation-delay: .0s;
 }
 
-#icon-maze {
+body.blockly-games-page-active #icon-maze{
   animation-delay: .1s;
 }
 
-#icon-bird {
+body.blockly-games-page-active #icon-bird{
   animation-delay: .2s;
 }
 
-#icon-turtle {
+body.blockly-games-page-active #icon-turtle{
   animation-delay: .3s;
 }
 
-#icon-movie {
+body.blockly-games-page-active #icon-movie{
   animation-delay: .4s;
 }
 
-#icon-music {
+body.blockly-games-page-active #icon-music{
   animation-delay: .5s;
 }
 
-#icon-pond-tutor {
+body.blockly-games-page-active #icon-pond-tutor{
   animation-delay: .6s;
 }
 
-#icon-pond-duck {
+body.blockly-games-page-active #icon-pond-duck{
   animation-delay: .7s;
 }
 
-#back-puzzle {
+body.blockly-games-page-active #back-puzzle{
   animation-delay: .3s;
 }
 
-#back-maze {
+body.blockly-games-page-active #back-maze{
   animation-delay: .4s;
 }
 
-#back-bird {
+body.blockly-games-page-active #back-bird{
   animation-delay: .5s;
 }
 
-#back-turtle {
+body.blockly-games-page-active #back-turtle{
   animation-delay: .6s;
 }
 
-#back-movie {
+body.blockly-games-page-active #back-movie{
   animation-delay: .7s;
 }
 
-#back-music {
+body.blockly-games-page-active #back-music{
   animation-delay: .8s;
 }
 
-#back-pond-tutor {
+body.blockly-games-page-active #back-pond-tutor{
   animation-delay: .9s;
 }
 
-#back-pond-duck {
+body.blockly-games-page-active #back-pond-duck{
   animation-delay: 1.0s;
 }
 
@@ -173,7 +171,7 @@ a:hover > text {
   }
 }
 
-.gaugeBack {
+body.blockly-games-page-active .gaugeBack{
   stroke: #aaa;
   stroke-width: 6;
   fill: none;
@@ -181,7 +179,7 @@ a:hover > text {
   visibility: hidden;
 }
 
-.gaugeFront {
+body.blockly-games-page-active .gaugeFront{
   stroke: #0b0;
   stroke-width: 8;
   fill: none;

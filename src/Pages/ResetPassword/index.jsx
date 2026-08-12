@@ -34,14 +34,14 @@ export default function ResetPassword(){
     };
 
     return (
-        <>
-            <div className="header">
-                <div className="logo">
+        <div className="login-page">
+            <div className="login-header">
+                <div className="login-logo">
                     <Link to='/'>
                         <img
                             src="/assets/LogicalEducLogosemescrita_semfundo.svg"
                             alt="Logo Logical Educ"
-                            className="logo-img"
+                            className="login-logo-img"
                         />
                     </Link>
                 </div>
@@ -97,6 +97,6 @@ export default function ResetPassword(){
                     </p>
                 </div>
             </div>
-        </>
+        </div>
     );
 }

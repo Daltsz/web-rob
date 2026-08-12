@@ -69,14 +69,14 @@ export default function SingUp() {
         //     });
     
     return (
-        <>
-            <div className="header">
+        <div className="login-page">
+            <div className="login-header">
                 {/* <div className='menuLogin'>
                     <img className="logoLogin" src={logo} alt='Logo'></img>
                 </div> */}
-                <div className="logo">
+                <div className="login-logo">
                     <Link to="/">
-                        <img src="/assets/LogicalEducLogosemescrita_semfundo.svg" alt="Logo Logical Educ" className="logo-img" />
+                        <img src="/assets/LogicalEducLogosemescrita_semfundo.svg" alt="Logo Logical Educ" className="login-logo-img" />
                     </Link>
                 </div>
             </div>
@@ -174,7 +174,7 @@ export default function SingUp() {
 
                 </div>
             </div>
-        </>
+        </div>
 
     )
 }

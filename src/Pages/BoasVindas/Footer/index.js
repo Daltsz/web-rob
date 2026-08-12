@@ -2,7 +2,7 @@ import "../Footer/index.css"
 
 function Footer() {
     return (
-        <div className="fundo">
+        <div className="welcome-footer-background">
 
             <div id="footer">
                 <div className="esquerdo-contato">

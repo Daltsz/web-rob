@@ -1,0 +1,27 @@
+LogicalEduc — Dashboard V1
+
+Implementado sobre o ZIP enviado, preservando a identidade visual existente (cores, logos e nomes).
+
+Alterações desta versão:
+- Nova página /inicio com saudação e briefing curto da LogicalEduc.
+- Principais experiências: Modo Livre, Atividades e Campanhas.
+- Área "Seus recursos": Meus Robôs.
+- Área "Aprenda e consulte": Tutoriais e Manuais.
+- Novas rotas /tutoriais, /manuais e /meus-robos.
+- Página Meus Robôs usa a função getMyRobots() já existente no front.
+- Layout responsivo para desktop, tablet e celular.
+- Nenhuma alteração em backend, MQTT ou banco de dados.
+
+Validação:
+- npm test: 2 suites / 2 testes passaram.
+- npm run build com CI=false: build concluído com warnings legados já existentes no projeto.
+
+Como testar:
+1. Faça backup/commit da branch frontend-redesign.
+2. Aplique os arquivos do patch ou use o projeto fonte completo.
+3. Rode npm install (se necessário).
+4. Rode npm start.
+5. Após login, acesse /inicio.
+
+Observação:
+- Atividades aponta para /blocklyGames, que já existia no projeto e possui problemas legados próprios; eles não foram corrigidos nesta etapa.

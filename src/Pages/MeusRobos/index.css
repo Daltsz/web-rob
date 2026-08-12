@@ -1,0 +1,90 @@
+.robots-message,
+.robots-empty {
+  margin-top: 28px;
+  color: #5c677d;
+}
+
+.robots-empty {
+  padding: 30px;
+  border: 1px solid #eaf7ff;
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 9px 24px rgba(66, 77, 101, 0.05);
+}
+
+.robots-empty h2 {
+  margin: 0 0 8px;
+  color: #2A2E36;
+  font-size: 20px;
+}
+
+.robots-empty p {
+  margin: 0 0 18px;
+}
+
+.robots-empty button {
+  padding: 11px 18px;
+  border: 0;
+  border-radius: 8px;
+  background: #DEF4FE;
+  color: #04A8FF;
+  font: inherit;
+  font-weight: 600;
+}
+
+.robots-empty button:hover {
+  background: #04A8FF;
+  color: #ffffff;
+}
+
+.robots-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 28px;
+}
+
+.robot-card {
+  display: flex;
+  gap: 18px;
+  padding: 24px;
+  border: 1px solid #eaf7ff;
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 9px 24px rgba(66, 77, 101, 0.05);
+}
+
+.robot-card-icon {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 14px;
+  background: #DEF4FE;
+  font-size: 24px;
+}
+
+.robot-card h2 {
+  margin: 0 0 8px;
+  color: #2A2E36;
+  font-size: 18px;
+}
+
+.robot-card p {
+  margin: 4px 0;
+  color: #5c677d;
+  font-size: 14px;
+}
+
+.robot-status {
+  color: #04A8FF;
+  font-weight: 600;
+}
+
+@media (max-width: 700px) {
+  .robots-grid {
+    grid-template-columns: 1fr;
+  }
+}

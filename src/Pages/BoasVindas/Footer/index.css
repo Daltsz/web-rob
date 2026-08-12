@@ -187,12 +187,12 @@
   margin-top: 0.9rem;    /* reduziu mais 10% */
 }
 
-a {
+.welcome-footer-background a {
     text-decoration: none;
     color: #4A556D;
 }
 
-.fundo {
+.welcome-footer-background {
   padding-inline: clamp(2rem, 8vw, 80px);
 }
 

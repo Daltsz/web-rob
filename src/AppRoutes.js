@@ -12,6 +12,10 @@ import SingIn from './Pages/Login/SingIn.js'
 import SingUp from './Pages/Login/SingUp.js'
 import ForgotPassword from './Pages/ForgotPassword/index.jsx';
 import ResetPassword from './Pages/ResetPassword/index.jsx';
+import Tutoriais from './Pages/Tutoriais';
+import Manuais from './Pages/Manuais';
+import MeusRobos from './Pages/MeusRobos';
+import Atividades from './Pages/Atividades';
 
 function RequireAuth({children}){
     const token = localStorage.getItem('token');
@@ -42,6 +46,10 @@ export default function Directions(){
                 <Route path ='/calculator' element={<Calculator></Calculator>}></Route>
                 <Route path ='/Moviment' element={<Moviments></Moviments>}></Route>
                 <Route path='/blocklyGames' element={<BlocklyGamesComponent></BlocklyGamesComponent>}></Route>
+                <Route path='/tutoriais' element={<Tutoriais />}></Route>
+                <Route path='/manuais' element={<Manuais />}></Route>
+                <Route path='/meus-robos' element={<MeusRobos />}></Route>
+                <Route path='/atividades' element={<Atividades />}></Route>
             </Routes>
         </BrowserRouter>
     );

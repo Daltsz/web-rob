@@ -51,15 +51,15 @@ export default function Moviments() {
 
 
     return (
-        <>
+        <div className="moviments-page">
             <Header></Header>
-            <div className="fill-height" ref={blocklyRef}>
+            <div className="moviments-workspace" ref={blocklyRef}>
                 <BlocklyWorkspace />
             </div>
-            <div className="divBtns">
-                <button className="Btns" onClick={handleCompileClick}>Compilar</button>
+            <div className="moviments-actions">
+                <button className="moviments-action-button" onClick={handleCompileClick}>Compilar</button>
             </div>
 
-        </>
+        </div>
     );
 }

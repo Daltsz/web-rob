@@ -1,46 +1,45 @@
-body {
+body.blockly-games-page-active{
   background-color: #fff;
   font-family: sans-serif;
   margin-top: 0;
 }
-h1 {
+body.blockly-games-page-active h1{
   font-weight: normal;
   font-size: 130%;
 }
-h1 a {
+body.blockly-games-page-active h1 a{
   text-decoration: none;
 }
-a:focus,
-a:hover {
+body.blockly-games-page-active a:focus, body.blockly-games-page-active a:hover{
   color: #f00;
 }
-.farSide {
+body.blockly-games-page-active .farSide{
   text-align: right;
 }
-#header_cta>* {
+body.blockly-games-page-active #header_cta>*{
   vertical-align: middle;
 }
-html[dir="RTL"] .farSide {
+html[dir="RTL"] body.blockly-games-page-active .farSide{
   text-align: left;
 }
-.level_number {
+body.blockly-games-page-active .level_number{
   border: solid 1px #ddd;
   border-radius: 20px;
   padding: 6px 12px;
   color: #888;
 }
-.level_dot {
+body.blockly-games-page-active .level_dot{
   border: solid 1px #ddd;
 	border-radius: 50%;
 	width: 15px;
 	height: 15px;
   display: inline-block;
 }
-.level_done, .level_dot:hover, .level_number:hover {
+body.blockly-games-page-active .level_done, body.blockly-games-page-active .level_dot:hover, body.blockly-games-page-active .level_number:hover{
   background-color: #ddd;
   color: #000;
 }
-#containerCode {
+body.blockly-games-page-active #containerCode{
   direction: ltr;
   background-color: #eee;
   padding: 5px;
@@ -50,25 +49,25 @@ html[dir="RTL"] .farSide {
   max-height: 200px;
 }
 
-img[src$="help.png"] {
+body.blockly-games-page-active img[src$="help.png"]{
   height: 64px;
   width: 64px;
 }
 
-html[dir="RTL"] .mirrorImg {
+html[dir="RTL"] body.blockly-games-page-active .mirrorImg{
   transform: scaleX(-1);
 }
 
-#languageMenu {
+body.blockly-games-page-active #languageMenu{
   margin: 16px 0;
 }
 
-xml {
+body.blockly-games-page-active xml{
   display: none;
 }
 
 /* Buttons */
-button {
+body.blockly-games-page-active button{
   margin: 5px;
   padding: 10px;
   border-radius: 4px;
@@ -77,36 +76,35 @@ button {
   background-color: #eee;
   color: #000;
 }
-button.primary {
+body.blockly-games-page-active button.primary{
   border: 1px solid #dd4b39;
   background-color: #dd4b39;
   color: #fff;
 }
-button.secondary {
+body.blockly-games-page-active button.secondary{
   border: 1px solid #4d90fe;
   background-color: #4d90fe;
   color: #fff;
 }
-button.primary>img,
-button.secondary>img {
+body.blockly-games-page-active button.primary>img, body.blockly-games-page-active button.secondary>img{
   opacity: 1;
 }
-button>img {
+body.blockly-games-page-active button>img{
   opacity: .6;
   vertical-align: text-bottom;
 }
-button:hover:not(:disabled)>img {
+body.blockly-games-page-active button:hover:not(:disabled)>img{
   opacity: 1;
 }
-button:active:not(:disabled) {
+body.blockly-games-page-active button:active:not(:disabled){
   border: 1px solid #888 !important;
 }
-button:hover:not(:disabled) {
+body.blockly-games-page-active button:hover:not(:disabled){
   box-shadow: 2px 2px 5px #888;
 }
 
 /* Dialogs */
-#dialog {
+body.blockly-games-page-active #dialog{
   visibility: hidden;
   background-color: #fff;
   color: #000;
@@ -116,7 +114,7 @@ button:hover:not(:disabled) {
   box-shadow: 5px 5px 5px #888;
   padding: 10px;
 }
-#dialogBorder {
+body.blockly-games-page-active #dialogBorder{
   visibility: hidden;
   position: absolute;
   background-color: #fff;
@@ -125,7 +123,7 @@ button:hover:not(:disabled) {
   border-radius: 6px;
   box-shadow: 5px 5px 5px #888;
 }
-#dialogShadow {
+body.blockly-games-page-active #dialogShadow{
   visibility: hidden;
   position: fixed;
   top: 0;
@@ -135,19 +133,19 @@ button:hover:not(:disabled) {
   background-color: #000;
   opacity: .3
 }
-.dialogAnimate {
+body.blockly-games-page-active .dialogAnimate{
   transition-property: width height left top opacity;
   transition-duration: .2s;
   transition-timing-function: linear;
 }
-.dialogHiddenContent {
+body.blockly-games-page-active .dialogHiddenContent{
   visibility: hidden;
   position: absolute;
   top: 0;
   left: 0;
   z-index: -1;
 }
-#dialogHeader {
+body.blockly-games-page-active #dialogHeader{
   height: 25px;
   margin: -10px -10px 15px;
   border-top-left-radius: 8px;
@@ -155,42 +153,42 @@ button:hover:not(:disabled) {
   background-color: #ddd;
   cursor: move;
 }
-#dialog button {
+body.blockly-games-page-active #dialog button{
   min-width: 4em;
 }
-.readonly .blocklyMainBackground {
+body.blockly-games-page-active .readonly .blocklyMainBackground{
   stroke: none;
 }
-#galleryForm>header {
+body.blockly-games-page-active #galleryForm>header{
   font-size: larger;
 }
-#galleryForm>* {
+body.blockly-games-page-active #galleryForm>*{
   margin-top: 1em;
   margin-left: 1em;
   margin-right: 1em;
 }
 
 /* Sprited icons. */
-.icon21 {
+body.blockly-games-page-active .icon21{
   height: 21px;
   width: 21px;
   background-image: url(../images/icons.png);
 }
-.link {
+body.blockly-games-page-active .link{
   background-position: 0 0;
 }
-.camera {
+body.blockly-games-page-active .camera{
   background-position: -21px 0;
 }
-.stop {
+body.blockly-games-page-active .stop{
   background-position: -42px 0;
 }
-.run {
+body.blockly-games-page-active .run{
   background-position: -63px 0;
 }
-.gallery {
+body.blockly-games-page-active .gallery{
   background-position: -63px -21px;
 }
-.close {
+body.blockly-games-page-active .close{
   background-position: -42px -42px;
 }

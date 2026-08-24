@@ -220,6 +220,7 @@
   box-sizing: border-box;
   width: min(100%, 980px);
   max-height: min(84vh, 760px);
+  min-height: 0;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 18px;
@@ -410,10 +411,18 @@
 }
 
 .free-mode-code-dialog-body {
-  min-height: 0;
+  flex: 1 1 auto;
+  min-height: 120px;
   padding: 0;
   overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable both-edges;
   background: linear-gradient(135deg, #102d3e 0%, #0b2230 100%);
+}
+
+.free-mode-code-dialog-body:focus-visible {
+  outline: 3px solid rgba(69, 191, 255, 0.72);
+  outline-offset: -3px;
 }
 
 .free-mode-code-dialog-body pre {
@@ -461,6 +470,38 @@
   min-width: 0;
   padding: 0 24px 0 16px;
   white-space: pre;
+}
+
+
+.free-mode-code-token {
+  font: inherit;
+}
+
+.free-mode-code-token-keyword {
+  color: #7dd3fc;
+  font-weight: 600;
+}
+
+.free-mode-code-token-number {
+  color: #fcd34d;
+}
+
+.free-mode-code-token-string {
+  color: #a7f3d0;
+}
+
+.free-mode-code-token-comment {
+  color: #8da6b5;
+  font-style: italic;
+}
+
+.free-mode-code-token-function {
+  color: #c4b5fd;
+  font-weight: 600;
+}
+
+.free-mode-code-token-plain {
+  color: inherit;
 }
 
 @keyframes free-mode-code-dialog-enter {
@@ -1166,7 +1207,11 @@
 
   .free-mode-code-dialog {
     width: 100%;
-    max-height: none;
+    height: calc(100vh - 24px);
+    height: calc(100dvh - 24px);
+    max-height: calc(100vh - 24px);
+    max-height: calc(100dvh - 24px);
+    min-height: 0;
     border-radius: 14px;
   }
 
@@ -1211,6 +1256,10 @@
     text-align: center;
   }
 
+  .free-mode-code-dialog-body {
+    min-height: 0;
+  }
+
   .free-mode-code-dialog-body pre {
     padding: 14px 0 20px;
     font-size: 13px;
@@ -1239,6 +1288,29 @@
     width: 34px;
     height: 34px;
     font-size: 20px;
+  }
+}
+
+@media (max-height: 700px) {
+  .free-mode-code-dialog-backdrop {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
+  .free-mode-code-dialog {
+    max-height: calc(100vh - 24px);
+    max-height: calc(100dvh - 24px);
+  }
+
+  .free-mode-code-dialog-header {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
+  .free-mode-code-dialog-meta,
+  .free-mode-code-dialog-tools {
+    padding-top: 8px;
+    padding-bottom: 8px;
   }
 }
 

@@ -2,7 +2,7 @@ import "./FreeMode.css";
 import "../../Components/Blocks/customblocks";
 import { getDefaultToolBox } from "../../Components/Blockly/getDefaultToolBox";
 import { DEFAULT_OPTIONS } from "../../Components/Blockly/workspaceConfigs";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { BlocklyWorkspace, useBlocklyWorkspace} from "react-blockly";
 import {pythonGenerator} from 'blockly/python';
 import { sendRobotCommand } from "../../Services/robots";
@@ -16,6 +16,158 @@ const FEEDBACK_ICONS = {
   warning: '!',
   error: '×',
 };
+
+
+const PYTHON_KEYWORDS = new Set([
+  'False', 'None', 'True', 'and', 'as', 'assert', 'async', 'await', 'break',
+  'class', 'continue', 'def', 'del', 'elif', 'else', 'except', 'finally',
+  'for', 'from', 'global', 'if', 'import', 'in', 'is', 'lambda', 'nonlocal',
+  'not', 'or', 'pass', 'raise', 'return', 'try', 'while', 'with', 'yield',
+]);
+
+const PYTHON_NUMBER_PATTERN = /^(?:0[xX][0-9a-fA-F_]+|0[bB][01_]+|0[oO][0-7_]+|(?:\d[\d_]*\.\d*|\.\d+|\d[\d_]*)(?:[eE][+-]?\d[\d_]*)?[jJ]?)/;
+const PYTHON_IDENTIFIER_PATTERN = /^[A-Za-z_][A-Za-z0-9_]*/;
+const PYTHON_STRING_PREFIX_PATTERN = /^[rRuUbBfF]{1,2}(?=['"])/;
+
+function tokenizePythonCode(code) {
+  const lines = code ? code.split('\n') : [];
+  let openTripleQuote = null;
+
+  return lines.map((line) => {
+    const tokens = [];
+    let index = 0;
+
+    const pushToken = (type, value) => {
+      if (value) {
+        tokens.push({ type, value });
+      }
+    };
+
+    while (index < line.length) {
+      if (openTripleQuote) {
+        const closingIndex = line.indexOf(openTripleQuote, index);
+
+        if (closingIndex === -1) {
+          pushToken('string', line.slice(index));
+          index = line.length;
+          continue;
+        }
+
+        const closingEnd = closingIndex + openTripleQuote.length;
+        pushToken('string', line.slice(index, closingEnd));
+        index = closingEnd;
+        openTripleQuote = null;
+        continue;
+      }
+
+      const currentChar = line[index];
+
+      if (currentChar === '#') {
+        pushToken('comment', line.slice(index));
+        break;
+      }
+
+      let prefixLength = 0;
+      const prefixMatch = line.slice(index).match(PYTHON_STRING_PREFIX_PATTERN);
+      if (prefixMatch) {
+        prefixLength = prefixMatch[0].length;
+      }
+
+      const quoteIndex = index + prefixLength;
+      const quoteChar = line[quoteIndex];
+      if (quoteChar === "'" || quoteChar === '"') {
+        const tripleQuote = quoteChar.repeat(3);
+        const isTripleQuoted = line.slice(quoteIndex, quoteIndex + 3) === tripleQuote;
+
+        if (isTripleQuoted) {
+          const contentStart = quoteIndex + 3;
+          const closingIndex = line.indexOf(tripleQuote, contentStart);
+
+          if (closingIndex === -1) {
+            pushToken('string', line.slice(index));
+            openTripleQuote = tripleQuote;
+            break;
+          }
+
+          const closingEnd = closingIndex + 3;
+          pushToken('string', line.slice(index, closingEnd));
+          index = closingEnd;
+          continue;
+        }
+
+        let cursor = quoteIndex + 1;
+        let escaped = false;
+
+        while (cursor < line.length) {
+          const char = line[cursor];
+
+          if (!escaped && char === quoteChar) {
+            cursor += 1;
+            break;
+          }
+
+          if (!escaped && char === '\\') {
+            escaped = true;
+          } else {
+            escaped = false;
+          }
+
+          cursor += 1;
+        }
+
+        pushToken('string', line.slice(index, cursor));
+        index = cursor;
+        continue;
+      }
+
+      if (/\d/.test(currentChar) || (currentChar === '.' && /\d/.test(line[index + 1] || ''))) {
+        const numberMatch = line.slice(index).match(PYTHON_NUMBER_PATTERN);
+        if (numberMatch) {
+          pushToken('number', numberMatch[0]);
+          index += numberMatch[0].length;
+          continue;
+        }
+      }
+
+      if (/[A-Za-z_]/.test(currentChar)) {
+        const identifierMatch = line.slice(index).match(PYTHON_IDENTIFIER_PATTERN);
+        if (identifierMatch) {
+          const identifier = identifierMatch[0];
+          const identifierEnd = index + identifier.length;
+          const nextNonWhitespaceIndex = identifierEnd + (line.slice(identifierEnd).match(/^\s*/)?.[0].length || 0);
+          const isFunction = line[nextNonWhitespaceIndex] === '(' && !PYTHON_KEYWORDS.has(identifier);
+
+          pushToken(PYTHON_KEYWORDS.has(identifier) ? 'keyword' : isFunction ? 'function' : 'plain', identifier);
+          index = identifierEnd;
+          continue;
+        }
+      }
+
+      let cursor = index + 1;
+      while (cursor < line.length) {
+        const char = line[cursor];
+        const startsSpecialToken =
+          char === '#' ||
+          char === "'" ||
+          char === '"' ||
+          /\d/.test(char) ||
+          /[A-Za-z_]/.test(char) ||
+          (char === '.' && /\d/.test(line[cursor + 1] || ''));
+
+        if (startsSpecialToken) {
+          break;
+        }
+
+        cursor += 1;
+      }
+
+      pushToken('plain', line.slice(index, cursor));
+      index = cursor;
+    }
+
+    return tokens;
+  });
+}
 
 async function copyTextToClipboard(text) {
   if (navigator.clipboard?.writeText) {
@@ -469,6 +621,7 @@ export default function App() {
   };
 
   const codeLines = workspaceCode ? workspaceCode.split('\n') : [];
+  const highlightedCodeLines = useMemo(() => tokenizePythonCode(workspaceCode), [workspaceCode]);
   const codeLineCount = codeLines.length;
   const codeLineLabel = `${codeLineCount} ${codeLineCount === 1 ? 'linha' : 'linhas'}`;
 
@@ -794,15 +947,33 @@ export default function App() {
                 Baixar .py
               </button>
             </div>
-            <div className="free-mode-code-dialog-body">
+            <span id="free-mode-code-dialog-scroll-help" className="free-mode-sr-only">
+              Use as setas, Page Up e Page Down para navegar pelo código. Pressione Escape para fechar a visualização expandida.
+            </span>
+            <div
+              className="free-mode-code-dialog-body"
+              role="region"
+              tabIndex={0}
+              aria-label="Visualizador do código MicroPython compilado"
+              aria-describedby="free-mode-code-dialog-scroll-help"
+            >
               <pre aria-label="Código MicroPython compilado">
                 <code>
-                  {codeLines.map((line, index) => (
-                    <span className="free-mode-code-line" key={`${index}-${line}`}>
+                  {highlightedCodeLines.map((tokens, index) => (
+                    <span className="free-mode-code-line" key={`line-${index}`}>
                       <span className="free-mode-code-line-number" aria-hidden="true">
                         {index + 1}
                       </span>
-                      <span className="free-mode-code-line-content">{line || ' '}</span>
+                      <span className="free-mode-code-line-content">
+                        {tokens.length > 0 ? tokens.map((token, tokenIndex) => (
+                          <span
+                            className={`free-mode-code-token free-mode-code-token-${token.type}`}
+                            key={`${index}-${tokenIndex}-${token.type}`}
+                          >
+                            {token.value}
+                          </span>
+                        )) : ' '}
+                      </span>
                     </span>
                   ))}
                 </code>

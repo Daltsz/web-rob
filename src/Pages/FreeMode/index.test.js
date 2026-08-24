@@ -251,6 +251,56 @@ describe('FreeMode', () => {
     expect(dialog.querySelectorAll('.free-mode-code-line-number')).toHaveLength(1);
   });
 
+  test('destaca sintaxe MicroPython sem alterar o conteúdo exibido', async () => {
+    getMyRobots.mockResolvedValue([
+      {
+        id: 3,
+        mac: 'AABBCCDDEEFF',
+        status: 'PAIRED',
+        topic: 'users/2/robots/3',
+      },
+    ]);
+    const compiledCode = [
+      '# comentário do programa',
+      'import machine',
+      'contador = 3',
+      'mensagem = "olá"',
+      'for i in range(contador):',
+      '    print(mensagem)',
+      'pino = machine.Pin(5, machine.Pin.OUT)',
+    ].join('\n');
+    pythonGenerator.workspaceToCode.mockReturnValue(`${compiledCode}\n`);
+
+    render(<FreeMode />);
+
+    await screen.findByText(/Robô selecionado:/i);
+    fireEvent.click(screen.getByRole('button', { name: 'Compilar' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Expandir código' }));
+
+    const dialog = screen.getByRole('dialog', { name: 'Código compilado' });
+    const codeViewer = within(dialog).getByLabelText('Código MicroPython compilado');
+
+    expect(codeViewer).toHaveTextContent('# comentário do programa');
+    expect(codeViewer).toHaveTextContent('import machine');
+    expect(codeViewer).toHaveTextContent('contador = 3');
+    expect(codeViewer).toHaveTextContent('mensagem = "olá"');
+    expect(codeViewer).toHaveTextContent('for i in range(contador):');
+    expect(codeViewer).toHaveTextContent('print(mensagem)');
+    expect(codeViewer).toHaveTextContent('machine.Pin(5, machine.Pin.OUT)');
+
+    expect(codeViewer.querySelector('.free-mode-code-token-comment')).toHaveTextContent('# comentário do programa');
+    expect(Array.from(codeViewer.querySelectorAll('.free-mode-code-token-keyword')).map((item) => item.textContent)).toEqual(
+      expect.arrayContaining(['import', 'for', 'in'])
+    );
+    expect(Array.from(codeViewer.querySelectorAll('.free-mode-code-token-number')).map((item) => item.textContent)).toEqual(
+      expect.arrayContaining(['3', '5'])
+    );
+    expect(codeViewer.querySelector('.free-mode-code-token-string')).toHaveTextContent('"olá"');
+    expect(Array.from(codeViewer.querySelectorAll('.free-mode-code-token-function')).map((item) => item.textContent)).toEqual(
+      expect.arrayContaining(['range', 'print', 'Pin'])
+    );
+  });
+
   test('copia somente o MicroPython limpo e mostra feedback de código copiado', async () => {
     getMyRobots.mockResolvedValue([
       {
@@ -347,6 +397,66 @@ describe('FreeMode', () => {
     expect(window.URL.revokeObjectURL).toHaveBeenCalledWith('blob:logicaleduc-code');
 
     anchorClickSpy.mockRestore();
+  });
+
+  test('mantém o foco preso na janela expandida e permite focar o visualizador de código', async () => {
+    getMyRobots.mockResolvedValue([
+      {
+        id: 3,
+        mac: 'AABBCCDDEEFF',
+        status: 'PAIRED',
+        topic: 'users/2/robots/3',
+      },
+    ]);
+    pythonGenerator.workspaceToCode.mockReturnValue('import machine\nprint("ok")\n');
+
+    render(<FreeMode />);
+
+    await screen.findByText(/Robô selecionado:/i);
+    fireEvent.click(screen.getByRole('button', { name: 'Compilar' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Expandir código' }));
+
+    const dialog = screen.getByRole('dialog', { name: 'Código compilado' });
+    const closeButton = within(dialog).getByRole('button', { name: 'Fechar código expandido' });
+    const codeRegion = within(dialog).getByRole('region', { name: 'Visualizador do código MicroPython compilado' });
+
+    expect(closeButton).toHaveFocus();
+    expect(codeRegion).toHaveAttribute('tabindex', '0');
+
+    fireEvent.keyDown(document, { key: 'Tab', shiftKey: true });
+    expect(codeRegion).toHaveFocus();
+
+    fireEvent.keyDown(document, { key: 'Tab' });
+    expect(closeButton).toHaveFocus();
+  });
+
+  test('mantém todas as linhas disponíveis em códigos grandes sem truncar a visualização', async () => {
+    getMyRobots.mockResolvedValue([
+      {
+        id: 3,
+        mac: 'AABBCCDDEEFF',
+        status: 'PAIRED',
+        topic: 'users/2/robots/3',
+      },
+    ]);
+    const compiledCode = Array.from({ length: 600 }, (_, index) => `print(${index})`).join('\n');
+    pythonGenerator.workspaceToCode.mockReturnValue(`${compiledCode}\n`);
+
+    render(<FreeMode />);
+
+    await screen.findByText(/Robô selecionado:/i);
+    fireEvent.click(screen.getByRole('button', { name: 'Compilar' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Expandir código' }));
+
+    const dialog = screen.getByRole('dialog', { name: 'Código compilado' });
+    const codeViewer = within(dialog).getByLabelText('Código MicroPython compilado');
+    const lineNumbers = dialog.querySelectorAll('.free-mode-code-line-number');
+
+    expect(within(dialog).getByText('600 linhas')).toBeInTheDocument();
+    expect(lineNumbers).toHaveLength(600);
+    expect(lineNumbers[lineNumbers.length - 1]).toHaveTextContent('600');
+    expect(codeViewer).toHaveTextContent('print(0)');
+    expect(codeViewer).toHaveTextContent('print(599)');
   });
 
   test('fecha o código expandido com Escape e ao invalidar a compilação', async () => {

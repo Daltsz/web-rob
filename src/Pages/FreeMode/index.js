@@ -2,180 +2,822 @@ import "./FreeMode.css";
 import "../../Components/Blocks/customblocks";
 import { getDefaultToolBox } from "../../Components/Blockly/getDefaultToolBox";
 import { DEFAULT_OPTIONS } from "../../Components/Blockly/workspaceConfigs";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { BlocklyWorkspace, useBlocklyWorkspace} from "react-blockly";
-import {javascriptGenerator} from 'blockly/javascript';
+import {pythonGenerator} from 'blockly/python';
 import { sendRobotCommand } from "../../Services/robots";
+import { getMyRobots } from "../../Services/pairing";
 import Header from '../../Components/Header';
 import PairRobotModal from "../../Components/Pair/pairRobotModal";
 
-// const topico = "pareamento/40:f5:20:28:dd:c7"
+const FEEDBACK_ICONS = {
+  success: '✓',
+  info: 'i',
+  warning: '!',
+  error: '×',
+};
 
+async function copyTextToClipboard(text) {
+  if (navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(text);
+    return;
+  }
+
+  const textarea = document.createElement('textarea');
+  textarea.value = text;
+  textarea.setAttribute('readonly', '');
+  textarea.style.position = 'fixed';
+  textarea.style.opacity = '0';
+  textarea.style.pointerEvents = 'none';
+  textarea.style.top = '-9999px';
+  document.body.appendChild(textarea);
+  textarea.focus();
+  textarea.select();
+
+  const copied = typeof document.execCommand === 'function' && document.execCommand('copy');
+  textarea.remove();
+
+  if (!copied) {
+    throw new Error('Não foi possível copiar o código.');
+  }
+}
+
+function FeedbackCard({ feedback }) {
+  if (!feedback) {
+    return null;
+  }
+
+  const isError = feedback.type === 'error';
+
+  return (
+    <div
+      className={`free-mode-feedback free-mode-feedback-${feedback.type}`}
+      role={isError ? 'alert' : 'status'}
+      aria-live={isError ? 'assertive' : 'polite'}
+    >
+      <span className="free-mode-feedback-icon" aria-hidden="true">
+        {FEEDBACK_ICONS[feedback.type] || 'i'}
+      </span>
+      <div className="free-mode-feedback-copy">
+        <strong>{feedback.title}</strong>
+        <span>{feedback.message}</span>
+      </div>
+    </div>
+  );
+}
 
 export default function App() {
   const toolbox = getDefaultToolBox();
   const [workspaceCode, setWorkspaceCode] = useState('');
   const [topic, setTopic] = useState(null);
   const [showPairModal, setShowPairModal] = useState(false);
+  const [robots, setRobots] = useState([]);
   const [robot, setRobot] = useState(null);
+  const [robotsLoading, setRobotsLoading] = useState(true);
+  const [robotsError, setRobotsError] = useState('');
+  const [isSendingCommand, setIsSendingCommand] = useState(false);
+  const [compileFeedback, setCompileFeedback] = useState(null);
+  const [commandFeedback, setCommandFeedback] = useState(null);
+  const [isCodeExpanded, setIsCodeExpanded] = useState(false);
+  const [copyStatus, setCopyStatus] = useState('idle');
+  const mountedRef = useRef(true);
+  const sendingCommandRef = useRef(false);
   const blocklyRef = useRef(null);
+  const robotChoiceRefs = useRef([]);
+  const codeExpandButtonRef = useRef(null);
+  const codeDialogRef = useRef(null);
+  const codeDialogCloseRef = useRef(null);
   const { workspace } = useBlocklyWorkspace({
     toolboxConfiguration: toolbox,
     workspaceConfiguration: DEFAULT_OPTIONS,
     ref: blocklyRef,
   });
 
+  const loadRobots = useCallback(async () => {
+    try {
+      setRobotsLoading(true);
+      setRobotsError('');
 
-  // useEffect(() => {
-  //   const savedTopic = localStorage.getItem("robotTopic");
-  //   if (savedTopic){
-  //     setTopic(savedTopic);
-  //     setShowPairModal(false);
-  //   } else {
-  //     setShowPairModal(true);
-  //   }
-  // }, []);
-  useEffect(() => {
-    // TEMPORÁRIO: sempre abrir o modal ao entrar na tela
-    setShowPairModal(true);
+      const linkedRobots = await getMyRobots();
+      if (!mountedRef.current) {
+        return;
+      }
+
+      const pairedRobots = Array.isArray(linkedRobots)
+        ? linkedRobots.filter((item) => item && item.status === 'PAIRED' && item.topic)
+        : [];
+
+      setRobots(pairedRobots);
+
+      if (pairedRobots.length === 1) {
+        setRobot(pairedRobots[0]);
+        setTopic(pairedRobots[0].topic);
+        return;
+      }
+
+      setRobot(null);
+      setTopic(null);
+    } catch (err) {
+      if (!mountedRef.current) {
+        return;
+      }
+
+      console.error('Erro ao carregar robôs do usuário', err);
+      setRobots([]);
+      setRobot(null);
+      setTopic(null);
+      setRobotsError('Não foi possível carregar seus robôs. Tente novamente.');
+      setShowPairModal(false);
+    } finally {
+      if (mountedRef.current) {
+        setRobotsLoading(false);
+      }
+    }
   }, []);
 
+  useEffect(() => {
+    mountedRef.current = true;
+    loadRobots();
+
+    return () => {
+      mountedRef.current = false;
+    };
+  }, [loadRobots]);
+
+  useEffect(() => {
+    if (!workspace) {
+      return undefined;
+    }
+
+    const invalidateCompiledCode = (event) => {
+      if (!event || event.isUiEvent || event.type === 'finished_loading') {
+        return;
+      }
+
+      setWorkspaceCode('');
+      setCompileFeedback(null);
+      setCommandFeedback(null);
+      setCopyStatus('idle');
+      setIsCodeExpanded(false);
+    };
+
+    workspace.addChangeListener(invalidateCompiledCode);
+
+    return () => {
+      workspace.removeChangeListener(invalidateCompiledCode);
+    };
+  }, [workspace]);
+
+  useEffect(() => {
+    if (compileFeedback?.type !== 'success') {
+      return undefined;
+    }
+
+    const timer = window.setTimeout(() => {
+      if (mountedRef.current) {
+        setCompileFeedback(null);
+      }
+    }, 4500);
+
+    return () => window.clearTimeout(timer);
+  }, [compileFeedback]);
+
+  useEffect(() => {
+    if (commandFeedback?.type !== 'success') {
+      return undefined;
+    }
+
+    const timer = window.setTimeout(() => {
+      if (mountedRef.current) {
+        setCommandFeedback(null);
+      }
+    }, 4500);
+
+    return () => window.clearTimeout(timer);
+  }, [commandFeedback]);
+
+  useEffect(() => {
+    if (copyStatus !== 'success') {
+      return undefined;
+    }
+
+    const timer = window.setTimeout(() => {
+      if (mountedRef.current) {
+        setCopyStatus('idle');
+      }
+    }, 2200);
+
+    return () => window.clearTimeout(timer);
+  }, [copyStatus]);
+
+
+  useEffect(() => {
+    if (!isCodeExpanded) {
+      return undefined;
+    }
+
+    const previousBodyOverflow = document.body.style.overflow;
+    const triggerElement = codeExpandButtonRef.current;
+    document.body.style.overflow = 'hidden';
+    codeDialogCloseRef.current?.focus();
+
+    const handleDialogKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setCopyStatus('idle');
+        setIsCodeExpanded(false);
+        return;
+      }
+
+      if (event.key !== 'Tab' || !codeDialogRef.current) {
+        return;
+      }
+
+      const focusableElements = codeDialogRef.current.querySelectorAll(
+        'button:not([disabled]), [href], [tabindex]:not([tabindex="-1"])'
+      );
+
+      if (!focusableElements.length) {
+        return;
+      }
+
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements[focusableElements.length - 1];
+
+      if (event.shiftKey && document.activeElement === firstElement) {
+        event.preventDefault();
+        lastElement.focus();
+      } else if (!event.shiftKey && document.activeElement === lastElement) {
+        event.preventDefault();
+        firstElement.focus();
+      }
+    };
+
+    document.addEventListener('keydown', handleDialogKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', handleDialogKeyDown);
+      document.body.style.overflow = previousBodyOverflow;
+      triggerElement?.focus();
+    };
+  }, [isCodeExpanded]);
+
+  const openCodePreview = () => {
+    if (workspaceCode) {
+      setCopyStatus('idle');
+      setIsCodeExpanded(true);
+    }
+  };
+
+  const closeCodePreview = () => {
+    setCopyStatus('idle');
+    setIsCodeExpanded(false);
+  };
+
+  const handleCopyCode = async () => {
+    if (!workspaceCode) {
+      return;
+    }
+
+    setCopyStatus('idle');
+
+    try {
+      await copyTextToClipboard(workspaceCode);
+
+      if (mountedRef.current) {
+        setCopyStatus('success');
+      }
+    } catch (err) {
+      if (mountedRef.current) {
+        setCopyStatus('error');
+      }
+      console.error('Não foi possível copiar o código compilado', err);
+    }
+  };
+
+  const handleDownloadCode = () => {
+    if (!workspaceCode) {
+      return;
+    }
+
+    const blob = new Blob([workspaceCode], { type: 'text/x-python;charset=utf-8' });
+    const objectUrl = window.URL.createObjectURL(blob);
+    const downloadLink = document.createElement('a');
+
+    downloadLink.href = objectUrl;
+    downloadLink.download = 'logicaleduc_codigo.py';
+    downloadLink.style.display = 'none';
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    downloadLink.remove();
+    window.URL.revokeObjectURL(objectUrl);
+  };
+
   const handleCompileClick = () => {
-    if (workspace) {
-      try{
-      // javascriptGenerator.addReservedWords('code');
-      let code = javascriptGenerator.workspaceToCode(workspace);
-      console.log(code)
-      // code = code.split(/\s+(?=[^\s]*$)/)
-      // code = [code]
-      // code = code.map(s => s.replace(/\n$/, ''));
+    setCompileFeedback(null);
+    setCommandFeedback(null);
+    setCopyStatus('idle');
+    setIsCodeExpanded(false);
+
+    if (!workspace) {
+      setWorkspaceCode('');
+      setCompileFeedback({
+        type: 'error',
+        title: 'Não foi possível compilar',
+        message: 'Verifique os blocos e tente novamente.',
+      });
+      return;
+    }
+
+    try{
+      let code = pythonGenerator.workspaceToCode(workspace);
       code = code.replace(/\n$/, '');
-      console.log(code)
       setWorkspaceCode(code);
-      alert('Compilado Com Sucesso')
-      }catch(err){
-        alert('Não Compilado')
-        console.log('message error', err);
+      setCompileFeedback({
+        type: 'success',
+        title: 'Compilação concluída!',
+        message: 'Seu código está pronto para ser enviado ao robô.',
+      });
+    }catch(err){
+      setWorkspaceCode('');
+      setCompileFeedback({
+        type: 'error',
+        title: 'Não foi possível compilar',
+        message: 'Verifique os blocos e tente novamente.',
+      });
+      console.log('message error', err);
+    }
+  };
+
+  const handleRobotSelection = (selectedRobot) => {
+    setRobot(selectedRobot);
+    setTopic(selectedRobot ? selectedRobot.topic : null);
+    setCommandFeedback(null);
+  };
+
+  const handleRobotChoiceKeyDown = (event, currentIndex) => {
+    if (robots.length < 2) {
+      return;
+    }
+
+    let nextIndex = currentIndex;
+
+    switch (event.key) {
+      case 'ArrowRight':
+      case 'ArrowDown':
+        nextIndex = (currentIndex + 1) % robots.length;
+        break;
+      case 'ArrowLeft':
+      case 'ArrowUp':
+        nextIndex = (currentIndex - 1 + robots.length) % robots.length;
+        break;
+      case 'Home':
+        nextIndex = 0;
+        break;
+      case 'End':
+        nextIndex = robots.length - 1;
+        break;
+      default:
+        return;
+    }
+
+    event.preventDefault();
+    handleRobotSelection(robots[nextIndex]);
+    robotChoiceRefs.current[nextIndex]?.focus();
+  };
+
+  const handleRobotPaired = (pairedRobot) => {
+    setRobots((currentRobots) => {
+      const alreadyExists = currentRobots.some((item) => item.id === pairedRobot.id);
+
+      if (alreadyExists) {
+        return currentRobots.map((item) => item.id === pairedRobot.id ? pairedRobot : item);
+      }
+
+      return [...currentRobots, pairedRobot];
+    });
+
+    setRobot(pairedRobot);
+    setTopic(pairedRobot.topic || null);
+    setRobotsError('');
+    setCommandFeedback(null);
+  };
+
+  const handleClick = async (e) => {
+    e.preventDefault();
+
+    if (sendingCommandRef.current) {
+      return;
+    }
+
+    if (!robot){
+      setCommandFeedback({
+        type: 'warning',
+        title: 'Selecione um robô',
+        message: 'Escolha ou pareie um robô antes de controlar.',
+      });
+      return;
+    }
+
+    if(!workspaceCode){
+      setCommandFeedback({
+        type: 'warning',
+        title: 'Código não compilado',
+        message: 'Compile o código antes de controlar o robô.',
+      });
+      return;
+    }
+
+    sendingCommandRef.current = true;
+    setIsSendingCommand(true);
+    setCompileFeedback(null);
+    setCommandFeedback({
+      type: 'info',
+      title: 'Enviando comando...',
+      message: 'Aguarde enquanto o código é encaminhado pelo sistema.',
+    });
+
+    try{
+      await sendRobotCommand(robot.id, workspaceCode);
+
+      if (mountedRef.current) {
+        setCommandFeedback({
+          type: 'success',
+          title: 'Código enviado com sucesso!',
+          message: 'O comando foi encaminhado pelo sistema.',
+        });
+      }
+    }catch(err){
+      if (mountedRef.current) {
+        setCommandFeedback({
+          type: 'error',
+          title: 'Não foi possível enviar',
+          message: 'Tente novamente em alguns instantes.',
+        });
+      }
+      console.log('Mensagem Não Enviada', err);
+    }finally{
+      sendingCommandRef.current = false;
+
+      if (mountedRef.current) {
+        setIsSendingCommand(false);
       }
     }
   };
 
-  const handleRobotPaired = (robot) =>{
-    setRobot(robot)
-    setTopic(robot.topic);
-  }
-
-  const handleClick = async (e) =>{
-    e.preventDefault();
-    try{
-      if (!robot){
-        alert("Nenhum robô pareado. Por favor, pareie seu robô primeiro.");
-        setShowPairModal(true);
-        return;
-      };
-
-      if(!workspaceCode){
-        alert('Nenhum código compilado. Clique em "Compilar" antes de controlar o robô.')
-        return; 
-      };
-
-      console.log(workspaceCode)
-      let topicToSend = topic.trim();
-      // let messageToSend = workspaceCode[0].toString('utf8');
-      // let messageToSend = String(workspaceCode);
-      // console.log(messageToSend)
-      console.log(topicToSend)
-      
-      await sendRobotCommand(robot.id, workspaceCode);
-      alert("Codigo enviado para o robo")
-      
-
-      // // publishMessage(topicToSend, messageToSend)
-      // const ok = publishMessage(topicToSend, messageToSend);
-      // if (!ok) {
-      //   // alert("Ainda não publicou: MQTT não está conectado (foi enfileirado).");
-      //   console.warn("Não publicou (MQTT não conectado)");
-      //   return;
-      // }
-      // // alert("Publicado no MQTT!");
-      // console.log("Publicado!");
-      // alert('Rodou Corretamente')
-    }catch(err){
-      alert('Erro ao enviar comando')
-      console.log('Mensagem Não Enviada', err);
-    }
+  const getRobotLabel = (item) => {
+    return item.name || item.mac || item.topic || `Robô ${item.id}`;
   };
 
+  const codeLines = workspaceCode ? workspaceCode.split('\n') : [];
+  const codeLineCount = codeLines.length;
+  const codeLineLabel = `${codeLineCount} ${codeLineCount === 1 ? 'linha' : 'linhas'}`;
 
   return (
     <div className="free-mode-page">
       <header>
         <Header></Header>
       </header>
+
       <div className="free_mode_topbar">
-        <button 
-          type="button"
-          className="free_mode_pair_button"
-          onClick={()=> setShowPairModal(true)}
-        >
-          Parear / Trocar Robô
-        </button>
-        {topic && (
-          <span className="free_mode_robot_info">
-            Robô conectado em: <strong>{topic}</strong>
-          </span>
+        {robotsLoading && (
+          <div className="free_mode_robot_state">
+            <span className="free_mode_robot_info" role="status" aria-live="polite">
+              Carregando robôs vinculados...
+            </span>
+          </div>
+        )}
+
+        {!robotsLoading && robotsError && (
+          <div className="free_mode_robot_state free_mode_robot_error_state">
+            <span className="free_mode_robot_error" role="alert">
+              {robotsError}
+            </span>
+            <button
+              type="button"
+              className="free_mode_retry_button"
+              onClick={loadRobots}
+            >
+              Tentar novamente
+            </button>
+          </div>
+        )}
+
+        {!robotsLoading && !robotsError && robots.length === 0 && (
+          <div
+            className="free_mode_robot_state free_mode_robot_empty_state"
+            role="status"
+            aria-live="polite"
+          >
+            <div className="free_mode_robot_empty_copy">
+              <strong>Nenhum robô vinculado.</strong>
+              <span>Pareie seu primeiro robô para começar a programar.</span>
+            </div>
+            <button
+              type="button"
+              className="free_mode_pair_button"
+              onClick={() => setShowPairModal(true)}
+            >
+              Parear novo robô
+            </button>
+          </div>
+        )}
+
+        {!robotsLoading && !robotsError && robots.length > 0 && (
+          <>
+            <button
+              type="button"
+              className="free_mode_pair_button"
+              onClick={() => setShowPairModal(true)}
+            >
+              Parear novo robô
+            </button>
+
+            {robots.length === 1 && (
+              <span className="free_mode_robot_info">1 robô vinculado</span>
+            )}
+
+            {robots.length > 1 && (
+              <section
+                className="free_mode_robot_picker"
+                aria-labelledby="free-mode-robot-picker-title"
+              >
+                <div className="free_mode_robot_picker_header">
+                  <div className="free_mode_robot_picker_heading">
+                    <span className="free_mode_robot_picker_eyebrow">
+                      {robots.length} robôs vinculados
+                    </span>
+                    <strong id="free-mode-robot-picker-title">
+                      Escolha qual robô receberá os comandos
+                    </strong>
+                  </div>
+                  <span
+                    className={`free_mode_robot_picker_status${robot ? ' free_mode_robot_picker_status_selected' : ''}`}
+                    aria-live="polite"
+                  >
+                    {robot ? 'Robô escolhido' : 'Seleção necessária'}
+                  </span>
+                </div>
+
+                <span id="free-mode-robot-picker-help" className="free-mode-sr-only">
+                  Use as setas para navegar entre os robôs. Home vai para o primeiro e End para o último.
+                </span>
+
+                <div
+                  className="free_mode_robot_choices"
+                  role="radiogroup"
+                  aria-label="Robôs vinculados"
+                  aria-describedby="free-mode-robot-picker-help"
+                >
+                  {robots.map((item, index) => {
+                    const itemLabel = getRobotLabel(item);
+                    const isSelected = robot?.id === item.id;
+
+                    return (
+                      <button
+                        key={item.id}
+                        ref={(element) => {
+                          robotChoiceRefs.current[index] = element;
+                        }}
+                        type="button"
+                        role="radio"
+                        aria-checked={isSelected}
+                        aria-label={`Selecionar ${itemLabel}`}
+                        tabIndex={isSelected || (!robot && index === 0) ? 0 : -1}
+                        className={`free_mode_robot_choice${isSelected ? ' free_mode_robot_choice_selected' : ''}`}
+                        onClick={() => handleRobotSelection(item)}
+                        onKeyDown={(event) => handleRobotChoiceKeyDown(event, index)}
+                      >
+                        <span className="free_mode_robot_choice_icon" aria-hidden="true">🤖</span>
+                        <span className="free_mode_robot_choice_copy">
+                          <strong>{itemLabel}</strong>
+                          {item.topic && item.topic !== itemLabel && (
+                            <span>{item.topic}</span>
+                          )}
+                        </span>
+                        <span className="free_mode_robot_choice_marker" aria-hidden="true">
+                          {isSelected ? '✓' : ''}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </section>
+            )}
+
+            {robot ? (
+              <section
+                className="free_mode_selected_robot_card"
+                aria-label="Robô selecionado"
+                aria-live="polite"
+              >
+                <span className="free_mode_selected_robot_icon" aria-hidden="true">
+                  🤖
+                </span>
+                <div className="free_mode_selected_robot_copy">
+                  <span className="free_mode_selected_robot_eyebrow">Robô selecionado:</span>
+                  <strong className="free_mode_selected_robot_name">
+                    {getRobotLabel(robot)}
+                  </strong>
+                  {topic && topic !== getRobotLabel(robot) && (
+                    <span className="free_mode_selected_robot_topic">{topic}</span>
+                  )}
+                </div>
+                <span className="free_mode_selected_robot_badge">Vinculado</span>
+              </section>
+            ) : (
+              <section
+                className="free_mode_selected_robot_card free_mode_selected_robot_card_empty"
+                aria-label="Nenhum robô selecionado"
+                aria-live="polite"
+              >
+                <span className="free_mode_selected_robot_icon" aria-hidden="true">
+                  🤖
+                </span>
+                <div className="free_mode_selected_robot_copy">
+                  <span className="free_mode_selected_robot_eyebrow">Robô selecionado:</span>
+                  <strong className="free_mode_selected_robot_name">Nenhum robô selecionado</strong>
+                  <span className="free_mode_selected_robot_topic">
+                    Escolha um robô na lista para continuar.
+                  </span>
+                </div>
+              </section>
+            )}
+          </>
         )}
       </div>
-      <div  className="free-mode-workspace" ref={blocklyRef}>
+
+      <section
+        className="free-mode-workspace"
+        ref={blocklyRef}
+        aria-label="Área de programação por blocos"
+      >
         <BlocklyWorkspace/>
-      </div>
+      </section>
+
       <div className="free-mode-actions">
-        <div className="free-mode-code">{workspaceCode}</div>
-        <div className="free-mode-buttons">
-          <button className="free-mode-action-button" onClick={handleCompileClick}>Compilar</button>
-          <button  className="free-mode-action-button" onClick={handleClick}>Controlar</button>
+        <section
+          className={`free-mode-code-window${workspaceCode ? ' free-mode-code-window-ready' : ''}`}
+          aria-labelledby="free-mode-code-window-title"
+        >
+          <div className="free-mode-code-window-header">
+            <div className="free-mode-code-window-title-group">
+              <span className="free-mode-code-window-eyebrow">Resultado da compilação</span>
+              <strong id="free-mode-code-window-title">Código compilado</strong>
+            </div>
+            <button
+              ref={codeExpandButtonRef}
+              type="button"
+              className="free-mode-code-expand-button"
+              onClick={openCodePreview}
+              disabled={!workspaceCode}
+              aria-haspopup="dialog"
+              aria-controls="free-mode-code-dialog"
+            >
+              <span aria-hidden="true">↗</span>
+              Expandir código
+            </button>
+          </div>
+
+          <button
+            type="button"
+            className="free-mode-code-preview"
+            onClick={openCodePreview}
+            disabled={!workspaceCode}
+            aria-label={workspaceCode ? 'Abrir código compilado em visualização expandida' : 'Compile o código para habilitar a visualização expandida'}
+          >
+            <code>{workspaceCode || 'O código compilado aparecerá aqui.'}</code>
+          </button>
+        </section>
+        <div className="free-mode-buttons-wrapper">
+          <div className="free-mode-buttons">
+            <button
+              type="button"
+              className={`free-mode-action-button${workspaceCode ? ' free-mode-action-button-compiled' : ''}`}
+              onClick={handleCompileClick}
+            >
+              {workspaceCode ? '✓ Compilado' : 'Compilar'}
+            </button>
+            <button
+              type="button"
+              className="free-mode-action-button"
+              onClick={handleClick}
+              disabled={!robot || !workspaceCode || isSendingCommand}
+              aria-busy={isSendingCommand}
+            >
+              {isSendingCommand ? 'Enviando...' : 'Controlar'}
+            </button>
+          </div>
+
+          <FeedbackCard feedback={compileFeedback} />
+          <FeedbackCard feedback={commandFeedback} />
         </div>
       </div>
-      {showPairModal && (
-        <PairRobotModal
-          onClose={()=> setShowPairModal(false)
 
-            // ATIVAR NOVAMENTE AS LINHAS ABAIXO
-            // const savedTopic = localStorage.getItem("robotTopic")
-            // if (!savedTopic){
-            //   return;
-            // }
-            // setShowPairModal(false)
-            // ================================================================
-          }
-          onPaired = {handleRobotPaired}
-        />
-      )}
-      {/* {showPairModal && (
+
+
+      {isCodeExpanded && workspaceCode && (
         <div
-          style={{
-            position: 'fixed',
-            inset: 0,
-            backgroundColor: 'rgba(0,0,0,0.5)',
-            zIndex: 9999,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
+          className="free-mode-code-dialog-backdrop"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) {
+              closeCodePreview();
+            }
           }}
         >
-          <div
-            style={{
-              background: '#fff',
-              padding: 24,
-              borderRadius: 12,
-            }}
+          <section
+            ref={codeDialogRef}
+            id="free-mode-code-dialog"
+            className="free-mode-code-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="free-mode-code-dialog-title"
+            aria-describedby="free-mode-code-dialog-description"
           >
-            <h2>TESTE MODAL INLINE</h2>
-            <p>Se você está vendo isso, o showPairModal está funcionando.</p>
-            <button onClick={() => setShowPairModal(false)}>Fechar teste</button>
-          </div>
+            <div className="free-mode-code-dialog-header">
+              <div className="free-mode-code-dialog-heading">
+                <span className="free-mode-code-window-eyebrow">Visualização expandida</span>
+                <h2 id="free-mode-code-dialog-title">Código compilado</h2>
+                <span id="free-mode-code-dialog-description">Visualize todo o código Python/MicroPython gerado pelos blocos.</span>
+              </div>
+              <button
+                ref={codeDialogCloseRef}
+                type="button"
+                className="free-mode-code-dialog-close"
+                onClick={closeCodePreview}
+                aria-label="Fechar código expandido"
+              >
+                ×
+              </button>
+            </div>
+            <div
+              className="free-mode-code-dialog-meta"
+              aria-label={`Código compilado em MicroPython. ${codeLineLabel}.`}
+            >
+              <span className="free-mode-code-dialog-meta-item free-mode-code-dialog-status">
+                <span className="free-mode-code-dialog-status-icon" aria-hidden="true">✓</span>
+                Código compilado
+              </span>
+              <span className="free-mode-code-dialog-meta-item free-mode-code-dialog-language">
+                MicroPython
+              </span>
+              <span className="free-mode-code-dialog-meta-item free-mode-code-dialog-lines">
+                {codeLineLabel}
+              </span>
+            </div>
+            <div className="free-mode-code-dialog-tools" aria-label="Utilidades do código compilado">
+              <div className="free-mode-code-dialog-tool-group">
+                <button
+                  type="button"
+                  className={`free-mode-code-dialog-tool-button${copyStatus === 'success' ? ' free-mode-code-dialog-tool-button-success' : ''}${copyStatus === 'error' ? ' free-mode-code-dialog-tool-button-error' : ''}`}
+                  onClick={handleCopyCode}
+                  aria-label={copyStatus === 'success' ? 'Código copiado' : 'Copiar código compilado'}
+                >
+                  <span aria-hidden="true">{copyStatus === 'success' ? '✓' : '⧉'}</span>
+                  {copyStatus === 'success' ? 'Código copiado' : 'Copiar código'}
+                </button>
+                <span
+                  className={`free-mode-code-dialog-copy-feedback${copyStatus === 'success' ? ' free-mode-sr-only' : ''}${copyStatus === 'error' ? ' free-mode-code-dialog-copy-feedback-error' : ''}`}
+                  role={copyStatus === 'error' ? 'alert' : 'status'}
+                  aria-live={copyStatus === 'error' ? 'assertive' : 'polite'}
+                >
+                  {copyStatus === 'success' ? 'Código copiado para a área de transferência.' : ''}
+                  {copyStatus === 'error' ? 'Não foi possível copiar. Tente novamente.' : ''}
+                </span>
+              </div>
+              <button
+                type="button"
+                className="free-mode-code-dialog-tool-button"
+                onClick={handleDownloadCode}
+                aria-label="Baixar código compilado como arquivo Python"
+              >
+                <span aria-hidden="true">↓</span>
+                Baixar .py
+              </button>
+            </div>
+            <div className="free-mode-code-dialog-body">
+              <pre aria-label="Código MicroPython compilado">
+                <code>
+                  {codeLines.map((line, index) => (
+                    <span className="free-mode-code-line" key={`${index}-${line}`}>
+                      <span className="free-mode-code-line-number" aria-hidden="true">
+                        {index + 1}
+                      </span>
+                      <span className="free-mode-code-line-content">{line || ' '}</span>
+                    </span>
+                  ))}
+                </code>
+              </pre>
+            </div>
+          </section>
         </div>
-      )} */}
+      )}
+
+      {showPairModal && (
+        <PairRobotModal
+          onClose={() => setShowPairModal(false)}
+          onPaired={handleRobotPaired}
+        />
+      )}
     </div>
   );
 }

@@ -1,13 +1,33 @@
-import  React, {useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { pairRobot, getMyRobots} from '../../Services/pairing';
 import './pairRobotModal.css'
 
 export default function PairRobotModal({onClose, onPaired}){
-    console.log('Renderizando PairRobotModal'); // DEBUG
     const [robotCode, setRobotCode] = useState('');
     const [status, setStatus] = useState('');
     const [loading, setLoading] = useState(false);
+    const mountedRef = useRef(true);
+    const cancelledRef = useRef(false);
+    const waitTimerRef = useRef(null);
+    const waitResolveRef = useRef(null);
 
+    useEffect(() => {
+      return () => {
+        mountedRef.current = false;
+        cancelledRef.current = true;
+
+        if (waitTimerRef.current) {
+          clearTimeout(waitTimerRef.current);
+          waitTimerRef.current = null;
+        }
+
+        if (waitResolveRef.current) {
+          const resolveWait = waitResolveRef.current;
+          waitResolveRef.current = null;
+          resolveWait();
+        }
+      };
+    }, []);
 
     const normalizeMac = (value) => {
       return String(value || "")
@@ -15,7 +35,35 @@ export default function PairRobotModal({onClose, onPaired}){
         .toUpperCase();
     };
 
-    const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+    const wait = (ms) => new Promise((resolve) => {
+      waitResolveRef.current = resolve;
+      waitTimerRef.current = setTimeout(() => {
+        waitTimerRef.current = null;
+        waitResolveRef.current = null;
+        resolve();
+      }, ms);
+    });
+
+    const isCancelled = () => cancelledRef.current || !mountedRef.current;
+
+    const handleClose = () => {
+      cancelledRef.current = true;
+
+      if (waitTimerRef.current) {
+        clearTimeout(waitTimerRef.current);
+        waitTimerRef.current = null;
+      }
+
+      if (waitResolveRef.current) {
+        const resolveWait = waitResolveRef.current;
+        waitResolveRef.current = null;
+        resolveWait();
+      }
+
+      if (onClose) {
+        onClose();
+      }
+    };
 
     const handlePair = async (e) => {
       e.preventDefault();
@@ -27,11 +75,16 @@ export default function PairRobotModal({onClose, onPaired}){
         return;
       }
 
+      cancelledRef.current = false;
+
       try {
         setLoading(true);
         setStatus("Enviando challenge para o robô...");
 
         const data = await pairRobot(normalizedMac);
+        if (isCancelled()) {
+          return;
+        }
 
         if (data.status !== "challenge_sent") {
           setStatus("Falha ao enviar challenge.");
@@ -43,49 +96,55 @@ export default function PairRobotModal({onClose, onPaired}){
         const startedAt = Date.now();
         const timeoutMs = 60000;
         const intervalMs = 2000;
-        while (Date.now() - startedAt < timeoutMs) {
+
+        while (!isCancelled() && Date.now() - startedAt < timeoutMs) {
           const robots = await getMyRobots();
-          console.log("ROBÔS DO USUÁRIO:", robots); 
+          if (isCancelled()) {
+            return;
+          }
+
           const pairedRobot = robots.find((robot) => {
             return (
               normalizeMac(robot.mac) === normalizedMac &&
               robot.status === "PAIRED" &&
               robot.topic
-            ); 
-
-
+            );
           });
 
           if (pairedRobot) {
             setStatus(`Robô pareado! Tópico: ${pairedRobot.topic}`);
-
             localStorage.setItem("robotTopic", pairedRobot.topic);
 
             if (onPaired) {
               onPaired(pairedRobot);
             }
 
-            setTimeout(() => {
-              if (onClose) {
-                onClose();
-              }
-            }, 800);
+            await wait(800);
+            if (!isCancelled() && onClose) {
+              onClose();
+            }
 
             return;
           }
 
           setStatus("Aguardando o robô responder ao pareamento...");
-          await sleep(intervalMs);
+          await wait(intervalMs);
         }
 
-        setStatus(
-          "O robô não respondeu. Verifique se ele está ligado, conectado ao Wi-Fi e apontando para o broker correto."
-        );
+        if (!isCancelled()) {
+          setStatus(
+            "O robô não respondeu. Verifique se ele está ligado, conectado ao Wi-Fi e apontando para o broker correto."
+          );
+        }
       } catch (err) {
-        console.error(err);
-        setStatus("Erro ao chamar API de pareamento.");
+        if (!isCancelled()) {
+          console.error(err);
+          setStatus("Erro ao chamar API de pareamento.");
+        }
       } finally {
-        setLoading(false);
+        if (!isCancelled()) {
+          setLoading(false);
+        }
       }
     };
 
@@ -176,7 +235,7 @@ export default function PairRobotModal({onClose, onPaired}){
     //             {status && <p className='pair_modal_status'>{status}</p>}
     //             <button 
     //                 type='button'
-    //                 onClick={onClose}
+    //                 onClick={handleClose}
     //                 className='pair_modal_close'   
     //             >
     //                 Fechar
@@ -265,7 +324,7 @@ export default function PairRobotModal({onClose, onPaired}){
 
         <button
           type="button"
-          onClick={onClose}
+          onClick={handleClose}
           // disabled={loading}
           
           className="pair_modal_close"

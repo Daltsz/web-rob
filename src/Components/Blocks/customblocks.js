@@ -1,6 +1,6 @@
 import Blockly from 'blockly';
-import 'blockly/javascript';
-import {javascriptGenerator} from 'blockly/javascript';
+import 'blockly/python';
+import {pythonGenerator} from 'blockly/python';
 
 
 Blockly.Blocks['Para_Frente'] = {
@@ -17,7 +17,7 @@ Blockly.Blocks['Para_Frente'] = {
 };
 
 
-javascriptGenerator.forBlock['Para_Frente'] = function() {
+pythonGenerator.forBlock['Para_Frente'] = function() {
   const code = `
 in1 = machine.Pin(5, machine.Pin.OUT)
 in2 = machine.Pin(4, machine.Pin.OUT)
@@ -56,7 +56,7 @@ Blockly.Blocks['Para_Tras'] = {
 };
 
 
-javascriptGenerator.forBlock['Para_Tras'] = function() {
+pythonGenerator.forBlock['Para_Tras'] = function() {
   const code = `
 in1 = machine.Pin(5, machine.Pin.OUT)
 in2 = machine.Pin(4, machine.Pin.OUT)
@@ -94,7 +94,7 @@ Blockly.Blocks['Esquerda'] = {
   }
 };
 
-javascriptGenerator.forBlock['Esquerda'] = function() {
+pythonGenerator.forBlock['Esquerda'] = function() {
   const code = `
 in1 = machine.Pin(5, machine.Pin.OUT)
 in2 = machine.Pin(4, machine.Pin.OUT)
@@ -133,7 +133,7 @@ Blockly.Blocks['Direita'] = {
   }
 };
 
-javascriptGenerator.forBlock['Direita'] = function() {
+pythonGenerator.forBlock['Direita'] = function() {
   const code = `
 in1 = machine.Pin(5, machine.Pin.OUT)
 in2 = machine.Pin(4, machine.Pin.OUT)
@@ -171,11 +171,11 @@ Blockly.Blocks['piscarLed'] = {
     this.setHelpUrl("");
   }
 };
-// javascriptGenerator.forBlock['piscarLed'] = function() {
+// pythonGenerator.forBlock['piscarLed'] = function() {
 //   const code = "led.blink(1000);board.wait(10000,async()=>{led.off().stop();res.writeContinue();}); "
 //   return code
 // };
-javascriptGenerator.forBlock['piscarLed'] = function() {
+pythonGenerator.forBlock['piscarLed'] = function() {
 const code = `
 pin = machine.Pin(2,machine.Pin.OUT)
 on = False
@@ -204,7 +204,7 @@ Blockly.Blocks['mexerMotor'] = {
 };
 
 
-javascriptGenerator.forBlock['mexerMotor'] = function() {
+pythonGenerator.forBlock['mexerMotor'] = function() {
   //const code ="var on=true;var pin3=0;var pin5=14;pinMode(pin5,'output');pinMode(pin3,'output');digitalWrite(pin5, on);digitalWrite(pin3,!on);setTimeout(function(){digitalWrite(pin5,!on);digitalWrite(pin3,!on);},5000)"
   const code = `
 in1 = machine.Pin(5, machine.Pin.OUT)
@@ -234,11 +234,11 @@ Blockly.Blocks['piscarLed2'] = {
     this.setHelpUrl("");
   }
 };
-// javascriptGenerator.forBlock['piscarLed'] = function() {
+// pythonGenerator.forBlock['piscarLed'] = function() {
 //   const code = "led.blink(1000);board.wait(10000,async()=>{led.off().stop();res.writeContinue();}); "
 //   return code
 // };
-javascriptGenerator.forBlock['piscarLed2'] = function() {
+pythonGenerator.forBlock['piscarLed2'] = function() {
   //const code = "var on=false;var pin=D2;var duration=5000;var interval=500;var intervalID=setInterval(function(){on=!on;digitalWrite(pin,on);},interval);setTimeout(function(){clearInterval(intervalID);digitalWrite(pin,true);},duration)"
   // const code ="var on=true;var pin3=0;var pin5=14;pinMode(pin5,'output');pinMode(pin3,'output');digitalWrite(pin5, on);digitalWrite(pin3,!on);setTimeout(function(){digitalWrite(pin5,!on);digitalWrite(pin3,!on);},5000)"
 const code = `
@@ -276,15 +276,14 @@ Blockly.Blocks['repeticao'] = {
 };
 
 
-javascriptGenerator.forBlock['repeticao'] = function(block, generator) {
-var dropdown_1 = block.getFieldValue('repetir');
-var statements_faz = generator.statementToCode(block, 'faz');
-// TODO: Assemble javascript into code variable.
-// var code = `for(var i=0;i<${dropdown_1};i++){${statements_faz}};`;
-var code = `
+pythonGenerator.forBlock['repeticao'] = function(block, generator) {
+  const dropdown_1 = block.getFieldValue('repetir');
+  const statements_faz = generator.statementToCode(block, 'faz');
+  const body = statements_faz || `${generator.INDENT}pass\n`;
+
+  return `
 for i in range(${dropdown_1}):
-  ${statements_faz}`;
-return code;
+${body}`;
 };
 
 
@@ -300,7 +299,7 @@ Blockly.Blocks['INICIO'] = {
   }
 };
 
-javascriptGenerator.forBlock['INICIO'] = function() {
+pythonGenerator.forBlock['INICIO'] = function() {
 const code = `
 import machine
 import time`
@@ -328,11 +327,11 @@ return code;
 
 
 
-// javascriptGenerator.forBlock['piscarLed'] = function() {
+// pythonGenerator.forBlock['piscarLed'] = function() {
 //   const code = "led.blink(1000);board.wait(10000,async()=>{led.off().stop();res.writeContinue();}); "
 //   return code
 // };
-// javascriptGenerator.forBlock['TOPICO'] = function() {
+// pythonGenerator.forBlock['TOPICO'] = function() {
 // const code = `setFixedTopic/charmander`
 //     // const code = "var on=false;var pin=D2;setInterval(function(){on=!on;digitalWrite(pin,on);},500)"
 //     // const code ="var on=true;var pin3=0;var pin5=14;pinMode(pin5,'output');pinMode(pin3,'output');digitalWrite(pin5, on);digitalWrite(pin3,!on);setTimeout(function(){digitalWrite(pin5,!on);digitalWrite(pin3,!on);},5000)"

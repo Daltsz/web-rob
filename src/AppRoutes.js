@@ -17,6 +17,7 @@ import Manuais from './Pages/Manuais';
 import MeusRobos from './Pages/MeusRobos';
 import Atividades from './Pages/Atividades';
 
+
 function RequireAuth({children}){
     const token = localStorage.getItem('token');
     if(!token){
@@ -45,11 +46,12 @@ export default function Directions(){
                 <Route path ='/Campaing' element={<Campaing></Campaing>}></Route>
                 <Route path ='/calculator' element={<Calculator></Calculator>}></Route>
                 <Route path ='/Moviment' element={<Moviments></Moviments>}></Route>
+                <Route path='/Puzzle' element={<PuzzleComponent></PuzzleComponent>}></Route>
                 <Route path='/blocklyGames' element={<BlocklyGamesComponent></BlocklyGamesComponent>}></Route>
                 <Route path='/tutoriais' element={<Tutoriais />}></Route>
                 <Route path='/manuais' element={<Manuais />}></Route>
+                <Route path="/atividades" element={<Atividades />}></Route>
                 <Route path='/meus-robos' element={<MeusRobos />}></Route>
-                <Route path='/atividades' element={<Atividades />}></Route>
             </Routes>
         </BrowserRouter>
     );

@@ -24,3 +24,6 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 package-lock.json
+bash.exe.stackdump
+LOGICALEDUC_DASHBOARD_V1_NOTAS.txt
+README_APLICAR_PATCH.txt

@@ -69,7 +69,7 @@ export default function SingUp() {
         //     });
     
     return (
-        <div className="login-page">
+        <div className="login-page login-page--signup">
             <div className="login-header">
                 {/* <div className='menuLogin'>
                     <img className="logoLogin" src={logo} alt='Logo'></img>
@@ -83,11 +83,11 @@ export default function SingUp() {
 
             <div className="containerLogin">
                 <div className='containerLeft'>
-                    <p className='frase' style={{ marginBottom: 0 }}>
+                    <p className='frase frase--register'>
                         Crie sua conta!
                     </p>
 
-                    <div className='d-flex'>
+                    <div className='register-intro-row'>
                         <div>
                             <p className='isCount'>
                                 Já tem uma conta?
@@ -100,7 +100,7 @@ export default function SingUp() {
                             </p>
                         </div>
 
-                        <img className="logoLogin" src={Saly} alt='' style={{ marginLeft: 250 }}></img>
+                        <img className="logoLogin register-illustration" src={Saly} alt='' />
                     </div>
 
                 </div>

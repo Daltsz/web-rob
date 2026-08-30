@@ -161,3 +161,250 @@
   font-size: 13px;
   line-height: 20px;
 }
+
+/*
+ * Login / Register responsive layout
+ * Scoped to these two screens because this stylesheet is also reused by
+ * ForgotPassword and ResetPassword.
+ */
+.login-page--signin,
+.login-page--signup {
+  min-height: 100vh;
+  width: 100%;
+}
+
+.login-page--signin .login-header,
+.login-page--signup .login-header {
+  padding: clamp(8px, 1.5vw, 14px) clamp(12px, 3vw, 32px);
+}
+
+.login-page--signin .containerLogin,
+.login-page--signup .containerLogin {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 370px);
+  align-items: center;
+  gap: clamp(40px, 7vw, 110px);
+  width: min(100%, 1200px);
+  margin: 0 auto;
+  padding: clamp(36px, 5vw, 72px) clamp(24px, 5vw, 64px) clamp(44px, 6vw, 80px);
+}
+
+.login-page--signin .containerLeft,
+.login-page--signup .containerLeft,
+.login-page--signin .containerRight,
+.login-page--signup .containerRight {
+  min-width: 0;
+  margin-top: 0;
+}
+
+.login-page--signin .containerRight,
+.login-page--signup .containerRight {
+  width: 100%;
+  max-width: 370px;
+  justify-self: end;
+}
+
+.login-page--signin .frase,
+.login-page--signup .frase {
+  width: auto;
+  max-width: 620px;
+  margin-bottom: clamp(24px, 3vw, 40px);
+  font-size: clamp(2.25rem, 4vw, 3.125rem);
+  line-height: 1.3;
+}
+
+.login-page--signup .frase--register {
+  margin-bottom: clamp(18px, 2.5vw, 30px);
+}
+
+.login-page--signin .entrar,
+.login-page--signup .entrar {
+  margin-bottom: clamp(18px, 2.5vw, 28px);
+  font-size: clamp(1.65rem, 2.4vw, 1.875rem);
+  line-height: 1.3;
+}
+
+.login-page--signin .form,
+.login-page--signup .form,
+.login-page--signin .btnEntrar,
+.login-page--signup .btnEntrar {
+  width: 100%;
+  max-width: 100%;
+}
+
+.login-page--signin .form,
+.login-page--signup .form {
+  min-height: 56px;
+  height: clamp(56px, 5vw, 62px);
+  padding: 0 16px;
+}
+
+.login-page--signin .btnEntrar,
+.login-page--signup .btnEntrar {
+  min-height: 54px;
+  height: clamp(54px, 5vw, 59px);
+}
+
+.login-page--signup .register-intro-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: clamp(16px, 4vw, 44px);
+  max-width: 620px;
+}
+
+.login-page--signup .register-intro-row > div {
+  flex: 0 1 auto;
+  min-width: max-content;
+}
+
+.login-page--signup .register-illustration {
+  display: block;
+  flex: 0 1 auto;
+  width: clamp(180px, 24vw, 300px);
+  max-width: 52%;
+  height: auto;
+  margin-left: auto;
+  object-fit: contain;
+}
+
+@media (max-width: 1024px) {
+  .login-page--signin .containerLogin,
+  .login-page--signup .containerLogin {
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 360px);
+    gap: clamp(32px, 5vw, 64px);
+    padding-left: clamp(24px, 4vw, 44px);
+    padding-right: clamp(24px, 4vw, 44px);
+  }
+
+  .login-page--signup .register-illustration {
+    width: clamp(160px, 21vw, 220px);
+  }
+}
+
+@media (max-width: 900px) {
+  .login-page--signin .containerLogin,
+  .login-page--signup .containerLogin {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    gap: 32px;
+    width: min(100%, 620px);
+    padding-top: clamp(28px, 5vw, 48px);
+  }
+
+  .login-page--signin .containerLeft,
+  .login-page--signup .containerLeft,
+  .login-page--signin .containerRight,
+  .login-page--signup .containerRight {
+    width: 100%;
+    max-width: none;
+  }
+
+  .login-page--signin .containerRight,
+  .login-page--signup .containerRight {
+    justify-self: stretch;
+  }
+
+  .login-page--signin .frase,
+  .login-page--signup .frase {
+    max-width: 100%;
+    margin-bottom: 18px;
+    font-size: clamp(2rem, 7vw, 2.6rem);
+  }
+
+  .login-page--signup .frase--register {
+    margin-bottom: 16px;
+  }
+
+  .login-page--signup .register-intro-row {
+    max-width: 100%;
+  }
+
+  .login-page--signup .register-illustration {
+    width: clamp(140px, 28vw, 190px);
+    max-width: 40%;
+  }
+}
+
+@media (max-width: 600px) {
+  .login-page--signin .login-header,
+  .login-page--signup .login-header {
+    padding: 8px 12px;
+  }
+
+  .login-page--signin .login-logo,
+  .login-page--signup .login-logo {
+    margin-left: 0;
+  }
+
+  .login-page--signin .login-logo-img,
+  .login-page--signup .login-logo-img {
+    height: 48px;
+    max-width: 220px;
+  }
+
+  .login-page--signin .containerLogin,
+  .login-page--signup .containerLogin {
+    gap: 26px;
+    padding: 24px 16px 36px;
+  }
+
+  .login-page--signin .frase,
+  .login-page--signup .frase {
+    font-size: clamp(1.8rem, 9vw, 2.2rem);
+    line-height: 1.2;
+  }
+
+  .login-page--signin .entrar,
+  .login-page--signup .entrar {
+    font-size: 1.55rem;
+  }
+
+  .login-page--signin .form,
+  .login-page--signup .form {
+    min-height: 54px;
+    height: 54px;
+    font-size: 0.8125rem;
+  }
+
+  .login-page--signin .btnEntrar,
+  .login-page--signup .btnEntrar {
+    min-height: 52px;
+    height: 52px;
+  }
+
+  .login-page--signin .isCount,
+  .login-page--signin .createCount,
+  .login-page--signup .isCount,
+  .login-page--signup .createCount {
+    font-size: 0.9375rem;
+    line-height: 1.5;
+  }
+
+  .login-page--signup .register-intro-row {
+    align-items: center;
+    gap: 12px;
+  }
+
+  .login-page--signup .register-intro-row > div {
+    min-width: 0;
+  }
+
+  .login-page--signup .register-illustration {
+    width: clamp(100px, 31vw, 140px);
+    max-width: 38%;
+  }
+}
+
+@media (max-width: 380px) {
+  .login-page--signin .containerLogin,
+  .login-page--signup .containerLogin {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .login-page--signup .register-illustration {
+    width: 96px;
+    max-width: 34%;
+  }
+}

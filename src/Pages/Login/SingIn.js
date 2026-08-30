@@ -44,7 +44,7 @@ export default function SingIn() {
 
 
     return (
-        <div className="login-page">
+        <div className="login-page login-page--signin">
             <div className="login-header">
                 <div className="login-logo">
                     <Link to="/">
